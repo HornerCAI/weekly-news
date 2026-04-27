@@ -3,868 +3,285 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OEM Weekly Intelligence Brief — Apr 23, 2026</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#F4F6FA;color:#55575C;display:flex;flex-direction:column;height:100vh;overflow:hidden}
-::-webkit-scrollbar{width:6px;height:6px}
-::-webkit-scrollbar-track{background:#EEF2F8}
-::-webkit-scrollbar-thumb{background:#D5DCE8;border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:#A7A9AC}
-
-/* TOP BAR */
-#topbar{background:#1D3E74;border-bottom:3px solid #FF8210;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:100}
-#topbar-left{display:flex;flex-direction:column}
-#topbar-super{font-family:Arial,sans-serif;font-size:11px;font-weight:400;color:rgba(255,255,255,0.65);letter-spacing:0.08em;text-transform:uppercase}
-#topbar-title{font-family:Arial,sans-serif;font-size:18px;font-weight:700;color:#FFFFFF;letter-spacing:-0.01em}
-#topbar-right{display:flex;align-items:center;gap:20px}
-#topbar-date{font-size:12px;color:rgba(255,255,255,0.7);font-family:Arial,sans-serif}
-#legend{display:flex;align-items:center;gap:12px;font-size:12px;color:rgba(255,255,255,0.85);font-family:Arial,sans-serif}
-.legend-item{display:flex;align-items:center;gap:4px;white-space:nowrap}
-#dl-btn{background:#FF8210;color:#fff;border:none;border-radius:4px;padding:8px 16px;font-family:Arial,sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background 0.15s}
-#dl-btn:hover{background:#e6740e}
-
-/* LAYOUT */
-#layout{display:flex;flex:1;overflow:hidden}
-
-/* SIDEBAR */
-#sidebar{width:272px;background:#1D3E74;display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
-#sidebar-search{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.1)}
-#search-wrap{position:relative;display:flex;align-items:center}
-#search-icon{position:absolute;left:9px;color:rgba(255,255,255,0.45);font-size:13px;pointer-events:none;z-index:1}
-#sidebar-search input{width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:4px;padding:7px 8px 7px 28px;font-size:13px;color:#fff;font-family:Arial,sans-serif;outline:none}
-#sidebar-search input::placeholder{color:rgba(255,255,255,0.4)}
-#sidebar-search input:focus{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.35)}
-#nav-list{flex:1;overflow-y:auto;padding:6px 0}
-.nav-item{display:flex;align-items:center;justify-content:space-between;padding:9px 16px 9px 14px;cursor:pointer;font-size:13px;font-family:Arial,sans-serif;color:rgba(255,255,255,0.78);border-left:3px solid transparent;transition:all 0.12s;user-select:none}
-.nav-item:hover{background:rgba(255,255,255,0.07);color:#fff}
-.nav-item.active{background:rgba(255,255,255,0.1);color:#fff;border-left-color:#0C80DF;font-weight:700}
-.nav-item.snapshot-nav{border-bottom:1px solid rgba(255,255,255,0.12);margin-bottom:4px;padding-bottom:11px;font-weight:700;color:#00BCDD}
-.nav-item.snapshot-nav.active{border-left-color:#00BCDD}
-.nav-status{font-size:13px;flex-shrink:0}
-
-/* MAIN */
-#main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-
-/* SNAPSHOT VIEW */
-#snapshot-view{padding:0}
-.snap-hero{background:#1D3E74;padding:28px 32px 24px;position:relative;overflow:hidden}
-.snap-hero::after{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;background-image:radial-gradient(circle,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:16px 16px;pointer-events:none}
-.snap-hero h2{font-size:22px;font-weight:700;color:#fff;font-family:Arial,sans-serif;margin-bottom:4px}
-.snap-hero p{font-size:13px;color:rgba(255,255,255,0.65);font-family:Arial,sans-serif}
-.snap-body{padding:24px 32px}
-.snap-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:#A7A9AC;font-family:Arial,sans-serif;margin-bottom:12px}
-.top3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
-.top3-card{background:#fff;border-radius:6px;border:1px solid #D5DCE8;border-top:3px solid #FF8210;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
-.top3-card h4{font-size:13px;font-weight:700;color:#1D3E74;font-family:Arial,sans-serif;margin-bottom:6px}
-.top3-card p{font-size:12px;color:#55575C;font-family:Arial,sans-serif;line-height:1.55}
-.oem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
-.oem-card{background:#fff;border-radius:5px;border:1px solid #D5DCE8;padding:12px 14px;cursor:pointer;transition:all 0.13s;display:flex;align-items:center;justify-content:space-between}
-.oem-card:hover{border-color:#0C80DF;box-shadow:0 2px 8px rgba(12,128,223,0.12);transform:translateY(-1px)}
-.oem-card-name{font-size:13px;font-weight:700;color:#1D3E74;font-family:Arial,sans-serif}
-.oem-card-status{font-size:14px}
-
-/* OEM DETAIL */
-#detail-view{display:none;padding:0}
-.detail-header{background:#1D3E74;padding:24px 32px;position:relative;overflow:hidden;min-height:88px;display:flex;align-items:center}
-.detail-header::before{content:'';position:absolute;right:-60px;top:-80px;width:240px;height:240px;background:rgba(255,255,255,0.04);transform:skewX(-57deg);pointer-events:none}
-.detail-header::after{content:'';position:absolute;right:20px;top:-60px;width:180px;height:220px;background:rgba(255,255,255,0.025);transform:skewX(-57deg);pointer-events:none}
-.detail-header h1{font-size:24px;font-weight:700;color:#fff;font-family:Arial,sans-serif;position:relative;z-index:1}
-.detail-header .oem-week{font-size:12px;color:rgba(255,255,255,0.55);font-family:Arial,sans-serif;margin-top:3px;position:relative;z-index:1}
-.detail-body{padding:24px 32px;display:flex;flex-direction:column;gap:12px}
-.section-card{background:#fff;border-radius:6px;border:1px solid #D5DCE8;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
-.section-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none;background:#fff;border-left:3px solid #0C80DF}
-.section-card-header h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:#1D3E74;font-family:Arial,sans-serif}
-.section-toggle{font-size:11px;color:#A7A9AC;transition:transform 0.2s}
-.section-card-body{padding:14px 16px;border-top:1px solid #EEF2F8;display:flex;flex-direction:column;gap:8px}
-.bullet-item{padding:10px 12px;border-radius:4px;border-left:3px solid #D5DCE8;background:#F4F6FA;font-size:13px;font-family:Arial,sans-serif;line-height:1.6;color:#55575C}
-.bullet-item.risk{border-left-color:#DC2626;background:#FEF2F2}
-.bullet-item.opp{border-left-color:#00BCDD;background:#F0FBFE}
-.bullet-item.muted{color:#A7A9AC;font-style:italic;border-left-color:#EEF2F8;background:#FAFAFA}
-.bullet-source{display:inline;font-size:12px}
-.bullet-source a{color:#0C80DF;text-decoration:none;font-family:Arial,sans-serif}
-.bullet-source a:hover{text-decoration:underline}
-.bullet-date{font-size:12px;color:#A7A9AC;font-family:Arial,sans-serif}
-.collapsed .section-card-body{display:none}
-.collapsed .section-toggle{transform:rotate(-90deg)}
-
-/* HAMBURGER */
-#hamburger{display:none;background:none;border:none;cursor:pointer;padding:0;flex-direction:column;gap:4px}
-#hamburger span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;transition:all 0.2s}
-#sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200}
-
-/* TOAST */
-#toast{position:fixed;bottom:24px;right:24px;background:#1D3E74;color:#fff;padding:12px 18px;border-radius:6px;font-size:13px;font-family:Arial,sans-serif;border-left:3px solid #00BCDD;opacity:0;pointer-events:none;transition:opacity 0.3s;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
-#toast.show{opacity:1}
-
-@media(max-width:768px){
-  #hamburger{display:flex}
-  #sidebar{position:fixed;left:-272px;top:0;height:100%;z-index:300;transition:left 0.25s}
-  #sidebar.open{left:0}
-  #sidebar-overlay.open{display:block}
-  #topbar{padding:0 16px}
-  #legend{display:none}
-  .snap-body{padding:16px}
-  .top3-grid{grid-template-columns:1fr}
-  .detail-body{padding:16px}
-}
-</style>
+<title>OEM Weekly Intelligence Brief — Apr 21–27, 2026 | Cox Automotive</title>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--trust:#1D3E74;--power:#0C80DF;--joyride:#024AA5;--orange:#FF8210;--aqua:#00BCDD;--green:#22A846;--red:#D63535;--aluminum:#A7A9AC;--steel:#808285;--asphalt:#55575C;--platinum:#F4F6FA;--white:#FFFFFF;--border:#D5DCE8;--surface2:#EEF2F8;--sidebar-w:272px;--topbar-h:102px}
+html,body{height:100%;font-family:Arial,sans-serif;background:var(--platinum);color:var(--asphalt);overflow:hidden}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:var(--trust);border-bottom:3px solid var(--orange);display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 0;z-index:200;box-shadow:0 2px 12px rgba(29,62,116,.2)}
+#topbar-left{display:flex;align-items:stretch;height:100%}
+#topbar-accent{width:5px;flex-shrink:0;background:linear-gradient(180deg,var(--orange) 0%,#ED6500 100%)}
+#topbar-titles{padding:12px 20px;display:flex;flex-direction:column;justify-content:center}
+#topbar-super{font-size:10px;font-weight:bold;letter-spacing:.2em;text-transform:uppercase;color:var(--aqua);margin-bottom:2px}
+#topbar-main{font-size:20px;font-weight:bold;color:#fff;letter-spacing:-.01em;line-height:1.2}
+#topbar-date{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;letter-spacing:.04em}
+#topbar-right{display:flex;align-items:center;gap:16px;flex-shrink:0}
+#legend{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:6px;padding:7px 13px;font-size:11px;white-space:nowrap}
+#legend strong{color:rgba(255,255,255,.65);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-right:3px}
+.leg-item{display:flex;align-items:center;gap:4px;color:rgba(255,255,255,.6);font-size:11px}
+#dl-btn{background:var(--orange);color:#fff;border:none;border-radius:5px;font-family:Arial,sans-serif;font-weight:bold;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:9px 16px;cursor:pointer;transition:background .15s,transform .1s;white-space:nowrap}
+#dl-btn:hover{background:#ED6500;transform:translateY(-1px)}
+#hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border-radius:4px;background:rgba(255,255,255,.1)}
+#hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px}
+#sidebar{position:fixed;top:var(--topbar-h);left:0;bottom:0;width:var(--sidebar-w);background:var(--trust);border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;z-index:100;overflow:hidden;transition:transform .25s ease}
+#sidebar-header{padding:12px 12px 10px;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0}
+#snapshot-tab{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:.09em;color:var(--aqua);background:rgba(0,188,221,.12);border:1px solid rgba(0,188,221,.28);transition:background .15s;user-select:none;margin-bottom:10px}
+#snapshot-tab:hover{background:rgba(0,188,221,.2)}#snapshot-tab.active{background:rgba(0,188,221,.25);border-color:var(--aqua)}
+#search-wrap{position:relative}
+#oem-search{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:5px;color:#fff;font-family:Arial,sans-serif;font-size:12px;padding:8px 12px 8px 30px;outline:none;transition:border-color .15s}
+#oem-search::placeholder{color:rgba(255,255,255,.4)}#oem-search:focus{border-color:var(--power)}
+.search-icon-inline{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.45);font-size:12px;pointer-events:none}
+.nav-section-label{font-size:9px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:10px 14px 4px}
+#oem-list{flex:1;overflow-y:auto;padding:2px 8px 16px}
+.oem-nav-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:5px;cursor:pointer;font-size:12px;color:rgba(255,255,255,.65);transition:background .12s,color .12s;border-left:3px solid transparent;margin-bottom:1px;user-select:none}
+.oem-nav-item:hover{background:rgba(255,255,255,.09);color:#fff}
+.oem-nav-item.active{background:rgba(12,128,223,.25);border-left-color:var(--power);color:#fff;font-weight:bold}
+.oem-nav-badge{font-size:13px;line-height:1}.oem-nav-hidden{display:none}
+#main{position:fixed;top:var(--topbar-h);left:var(--sidebar-w);right:0;bottom:0;overflow-y:auto;background:var(--platinum)}
+#snapshot-view{display:none;padding:0 0 48px}#snapshot-view.visible{display:block}
+#snapshot-hero{background:linear-gradient(135deg,var(--trust) 0%,var(--joyride) 100%);padding:28px 36px 24px;border-bottom:3px solid var(--orange);position:relative;overflow:hidden}
+#snapshot-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px;pointer-events:none}
+#snapshot-hero::after{content:'';position:absolute;right:-60px;top:-40px;width:200px;height:240px;background:linear-gradient(147deg,rgba(255,130,16,.18) 0%,transparent 60%);transform:skewX(-33deg);pointer-events:none}
+#snapshot-title{font-size:22px;font-weight:bold;color:#fff;position:relative;z-index:1;margin-bottom:3px}
+#snapshot-subtitle{font-size:11px;color:var(--aqua);letter-spacing:.12em;text-transform:uppercase;font-weight:bold;position:relative;z-index:1}
+.snap-section{padding:24px 36px 0}.snap-section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.snap-section-bar{width:4px;height:18px;border-radius:2px;flex-shrink:0}
+.snap-section-bar.green{background:var(--green)}.snap-section-bar.red{background:var(--red)}.snap-section-bar.orange{background:var(--orange)}.snap-section-bar.blue{background:var(--power)}
+.snap-section-label{font-size:10px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.snap-section-label.green{color:var(--green)}.snap-section-label.red{color:var(--red)}.snap-section-label.orange{color:var(--orange)}.snap-section-label.blue{color:var(--power)}
+.snap-section-label::after{content:'';flex:1;height:1px;opacity:.25;background:currentColor}
+.top3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.top3-card{border-radius:8px;padding:18px;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);transition:box-shadow .15s,transform .1s}
+.top3-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.12);transform:translateY(-1px)}
+.top3-card.opp{background:#F2FBF4;border:1px solid #B8E8C6;border-left:4px solid var(--green)}
+.top3-card.risk{background:#FDF4F4;border:1px solid #F0CACA;border-left:4px solid var(--red)}
+.top3-num{font-size:36px;font-weight:bold;position:absolute;top:6px;right:14px;line-height:1;opacity:.12}
+.top3-num.green{color:var(--green)}.top3-num.red{color:var(--red)}
+.top3-oem{font-size:10px;font-weight:bold;text-transform:uppercase;letter-spacing:.12em;margin-bottom:7px}
+.top3-oem.green{color:var(--green)}.top3-oem.red{color:var(--red)}
+.top3-text{font-size:12.5px;color:var(--asphalt);line-height:1.6;margin-bottom:8px}
+.top3-src{font-size:11px;color:var(--power);text-decoration:none}.top3-src:hover{text-decoration:underline}
+#oem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
+.grid-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:12px 14px;cursor:pointer;transition:background .12s,border-color .12s,transform .1s;display:flex;align-items:center;justify-content:space-between;gap:8px;box-shadow:0 1px 3px rgba(29,62,116,.06)}
+.grid-card:hover{background:#EEF5FF;border-color:var(--power);transform:translateY(-1px)}
+.grid-card-name{font-size:12px;font-weight:bold;color:var(--trust)}.grid-card-badge{font-size:15px;flex-shrink:0}
+#oem-detail{display:none}#oem-detail.visible{display:block}
+#oem-header{background:var(--trust);padding:28px 36px 24px;position:relative;overflow:hidden;border-bottom:3px solid var(--orange)}
+#oem-header::before{content:'';position:absolute;right:0;top:0;bottom:0;width:220px;background:linear-gradient(147deg,rgba(12,128,223,.22) 0%,transparent 70%);transform:skewX(-33deg) translateX(30px);pointer-events:none}
+#oem-header::after{content:'';position:absolute;right:40px;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--orange) 0%,transparent 100%);transform:skewX(-33deg);pointer-events:none}
+#oem-name{font-size:28px;font-weight:bold;color:#fff;position:relative;z-index:1;letter-spacing:-.01em}
+#oem-badge-row{display:flex;align-items:center;gap:10px;margin-top:8px;position:relative;z-index:1}
+.oem-status-badge{font-size:10px;font-weight:bold;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border-radius:4px}
+.badge-risk{background:rgba(214,53,53,.18);color:#ff8080;border:1px solid rgba(214,53,53,.38)}
+.badge-opp{background:rgba(34,168,70,.15);color:#4cce78;border:1px solid rgba(34,168,70,.35)}
+.badge-neutral{background:rgba(255,255,255,.1);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.18)}
+#oem-sections{padding:20px 36px 40px;display:flex;flex-direction:column;gap:10px}
+.section-card{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(29,62,116,.05)}
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;cursor:pointer;user-select:none;transition:background .12s;background:var(--white)}
+.section-header:hover{background:var(--surface2)}
+.section-title{font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:.11em;color:var(--trust);display:flex;align-items:center;gap:8px}
+.section-icon{font-size:13px}.section-chevron{color:var(--aluminum);font-size:13px;transition:transform .2s}
+.section-card.open .section-chevron{transform:rotate(180deg)}
+.section-card.open .section-header{border-bottom:1px solid var(--border);background:var(--surface2)}
+.section-card.open{border-color:#C5D4E8;border-top:3px solid var(--power);box-shadow:0 2px 8px rgba(29,62,116,.08)}
+.section-card.signals.open{border-color:#B8E8C6;border-top:3px solid var(--green)}
+.section-body{display:none;padding:16px 18px}.section-card.open .section-body{display:block}
+.bullet{padding:12px 14px;border-radius:6px;margin-bottom:0;border-left:3px solid transparent;font-size:13.5px;color:var(--asphalt);line-height:1.75}
+.bullet+.bullet{margin-top:8px}
+.bullet.risk{border-left-color:var(--red);background:#FDF4F4;border:1px solid #F0CACA;border-left-width:3px}
+.bullet.opportunity{border-left-color:var(--green);background:#F2FBF4;border:1px solid #B8E8C6;border-left-width:3px}
+.bullet.neutral{color:var(--aluminum);font-style:italic;border-left-color:var(--border);background:#FAFBFC;border:1px solid var(--border);border-left-width:3px}
+.bullet-prefix{font-weight:bold;display:block;margin-bottom:3px}
+.bullet-prefix.risk-prefix{color:var(--red)}.bullet-prefix.opp-prefix{color:var(--green)}
+.bullet-text{display:block;margin-bottom:8px}
+.bullet-meta{display:block;padding-left:4px;border-left:2px solid var(--border);margin-top:6px}
+.bullet-meta a{color:var(--power);text-decoration:none;font-size:12px;font-weight:bold}.bullet-meta a:hover{text-decoration:underline}
+.bullet-date{color:var(--aluminum);font-size:11px;margin-left:6px}
+.trends-grid{display:flex;flex-direction:column;gap:12px}
+.trend-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--orange);border-radius:8px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.trend-tag{font-size:10px;font-weight:bold;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:6px}
+.trend-text{font-size:13px;color:var(--asphalt);line-height:1.7}
+.trend-oems{font-size:11px;color:var(--steel);margin-top:5px;font-style:italic}
+#toast{position:fixed;bottom:24px;right:24px;background:var(--trust);color:#fff;border:1px solid var(--power);border-left:4px solid var(--green);padding:14px 20px;border-radius:8px;font-size:13px;font-weight:bold;box-shadow:0 8px 32px rgba(29,62,116,.25);transform:translateY(80px);opacity:0;transition:transform .3s ease,opacity .3s ease;z-index:1000;pointer-events:none}
+#toast.show{transform:translateY(0);opacity:1}
+@media(max-width:768px){:root{--sidebar-w:0px;--topbar-h:78px}#hamburger{display:flex}#sidebar{transform:translateX(-280px);width:280px}#sidebar.open{transform:translateX(0);box-shadow:8px 0 32px rgba(0,0,0,.3)}#main{left:0}#topbar{padding:0 12px}#topbar-main{font-size:16px}#legend{display:none}.top3-grid{grid-template-columns:1fr}#oem-sections{padding:16px 16px 40px}#oem-header{padding:20px 16px 16px}.snap-section{padding:16px}#snapshot-hero{padding:20px 16px}}</style>
 </head>
 <body>
-
 <div id="topbar">
-  <div style="display:flex;align-items:center;gap:12px">
-    <button id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-    <div id="topbar-left">
+  <div id="topbar-left">
+    <div id="topbar-accent"></div>
+    <div id="topbar-titles">
       <div id="topbar-super">Cox Automotive &middot; Sales Intelligence</div>
-      <div id="topbar-title">OEM Weekly Intelligence Brief</div>
+      <div id="topbar-main">OEM Weekly Intelligence Brief</div>
+      <div id="topbar-date">Week of Apr 21 &ndash; Apr 27, 2026 &nbsp;&middot;&nbsp; 33 OEMs Covered</div>
     </div>
   </div>
   <div id="topbar-right">
-    <div id="topbar-date">Week of Apr 16&ndash;23, 2026</div>
-    <div id="legend">
-      <div class="legend-item"><span>🔴</span> Has ⚠️ Risk items</div>
-      <div class="legend-item"><span>🟢</span> Has ✅ Opportunity items</div>
-      <div class="legend-item"><span>⚪</span> No signals flagged</div>
-    </div>
-    <button id="dl-btn">⬇ Download</button>
+    <div id="legend"><strong>Legend:</strong><span class="leg-item"><span>&#x1F534;</span><span>Has Risk</span></span><span class="leg-item"><span>&#x1F7E2;</span><span>Has Opportunity</span></span><span class="leg-item"><span>&#x26AA;</span><span>No Signals</span></span></div>
+    <button id="dl-btn" onclick="downloadDashboard()">&#8595; Download</button>
+    <div id="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
   </div>
 </div>
-
-<div id="sidebar-overlay"></div>
-
-<div id="layout">
-  <div id="sidebar">
-    <div id="sidebar-search">
-      <div id="search-wrap">
-        <span id="search-icon">🔍</span>
-        <input id="search-input" type="text" placeholder="Search OEMs…" autocomplete="off">
-      </div>
+<div id="sidebar">
+  <div id="sidebar-header">
+    <div id="snapshot-tab" onclick="showSnapshot()">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="0" y="0" width="5.5" height="5.5" rx="1" fill="currentColor" opacity=".8"/><rect x="7.5" y="0" width="5.5" height="5.5" rx="1" fill="currentColor" opacity=".8"/><rect x="0" y="7.5" width="5.5" height="5.5" rx="1" fill="currentColor" opacity=".8"/><rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1" fill="currentColor" opacity=".4"/></svg>
+      Weekly Snapshot
     </div>
-    <div id="nav-list"></div>
+    <div id="search-wrap"><span class="search-icon-inline">&#128269;</span><input id="oem-search" type="text" placeholder="Search OEMs..." oninput="filterOEMs(this.value)"></div>
   </div>
-
-  <div id="main">
-    <div id="snapshot-view">
-      <div class="snap-hero">
-        <h2>Weekly Snapshot &mdash; Apr 16&ndash;23, 2026</h2>
-        <p>33 OEMs monitored &bull; Sources: Automotive News, Reuters, Autoblog, Electrek, OEM Newsrooms &amp; more</p>
-      </div>
-      <div class="snap-body">
-        <div class="snap-section-title">Top Highlights This Week</div>
-        <div class="top3-grid">
-          <div class="top3-card">
-            <h4>🚗 Rivian R2 Production Starts</h4>
-            <p>CEO RJ Scaringe drove the first customer-ready R2 off the Normal, IL line on Apr 22 — days after a tornado hit the plant. Spring deliveries confirmed; analysts project 22K–23K R2 deliveries in 2026.</p>
-          </div>
-          <div class="top3-card">
-            <h4>📈 Tesla Q1 Earnings Beat</h4>
-            <p>Revenue up 16% to $22.4B; gross margins rebounded to 21.1%. Cybercab & Robotaxi expanding to Dallas/Houston. Musk: long-term, Roadster will be the only manually driven Tesla.</p>
-          </div>
-          <div class="top3-card">
-            <h4>🏎 BMW 7 Series Debuts in NYC</h4>
-            <p>The 2027 BMW 7 Series world-premiered at Grand Central Terminal on Apr 22 with full Neue Klasse tech. Production starts July 2026. BMW leads luxury Q1 with 84,231 US units despite -3.9% dip.</p>
-          </div>
-        </div>
-        <div class="snap-section-title">All OEMs &mdash; Status at a Glance</div>
-        <div class="oem-grid" id="oem-grid"></div>
-      </div>
-    </div>
-
-    <div id="detail-view">
-      <div class="detail-header">
-        <div>
-          <h1 id="detail-title">OEM Name</h1>
-          <div class="oem-week">Week of Apr 16–23, 2026</div>
-        </div>
-      </div>
-      <div class="detail-body" id="detail-body"></div>
-    </div>
+  <div class="nav-section-label">OEM Brands</div>
+  <div id="oem-list"></div>
+</div>
+<div id="main">
+  <div id="snapshot-view">
+    <div id="snapshot-hero"><div id="snapshot-title">Weekly Snapshot</div><div id="snapshot-subtitle">Apr 21 &ndash; Apr 27, 2026 &middot; 33 OEMs &middot; Cox Automotive Sales Intelligence</div></div>
+    <div class="snap-section"><div class="snap-section-header"><div class="snap-section-bar green"></div><div class="snap-section-label green">&#9650; Top 3 Opportunities This Week</div></div><div class="top3-grid" id="top3-opps"></div></div>
+    <div class="snap-section" style="padding-top:20px"><div class="snap-section-header"><div class="snap-section-bar red"></div><div class="snap-section-label red">&#9660; Top 3 Risks This Week</div></div><div class="top3-grid" id="top3-risks"></div></div>
+    <div class="snap-section" style="padding-top:20px"><div class="snap-section-header"><div class="snap-section-bar orange"></div><div class="snap-section-label orange">&#9650; Industry Trends</div></div><div class="trends-grid" id="trends-grid"></div></div>
+    <div class="snap-section" style="padding-top:20px;padding-bottom:0"><div class="snap-section-header"><div class="snap-section-bar blue"></div><div class="snap-section-label blue">All OEM Status</div></div><div id="oem-grid"></div></div>
+  </div>
+  <div id="oem-detail">
+    <div id="oem-header"><div id="oem-name"></div><div id="oem-badge-row"></div></div>
+    <div id="oem-sections"></div>
   </div>
 </div>
-
-<div id="toast">Dashboard saved — share the HTML file with your team</div>
-
+<div id="toast">&#10003; Dashboard saved — share the HTML file with your team</div>
 <script>
+const OEM_DATA={
+"Acura":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"opportunity",text:"Acura's MDX is running a strong April lease campaign at $569/month through April 30, 2026, positioning the three-row SUV as a value play against Lexus RX, BMW X5, and Genesis GV80. The deal includes SH-AWD standard and a $595 acquisition fee.",source:{label:"Autoblog",url:"https://www.autoblog.com/carbuying/2026-acura-mdx-lease-deal-april",date:"Apr 14, 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Acura announced expansion into the NTT INDYCAR SERIES for 2026, with branding on Marcus Armstrong's #66 at the Indianapolis 500 on May 24. This follows the brand's win at the Acura Grand Prix of Long Beach on April 19, leveraging INDYCAR's record 2026 TV audiences.",source:{label:"Acura Newsroom",url:"https://acuranews.com/en-US/releases/release-00b08be100b45a4ab9ae5793dd0d4199-acura-expands-motorsports-footprint-with-multi-race-indycar-presence-including-prestigious-indy-500",date:"Apr 22, 2026"}},{type:"risk",text:"Acura is pausing its IMSA GTP prototype racing program after the 2026 season, pivoting motorsports investment toward IndyCar.",source:{label:"Acura Newsroom",url:"https://acuranews.com/en-US/releases/release-00b08be100b45a4ab9ae5793dd0d4199-acura-expands-motorsports-footprint-with-multi-race-indycar-presence-including-prestigious-indy-500",date:"Apr 22, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"The Indy 500 activation (May 24) and 40th anniversary year create a rich storytelling moment; use this media window to open conversations about OEM-level sponsorship alignment, performance creative, and premium digital placements tied to the race audience."},{type:"opportunity",text:"April MDX lease deal expires April 30 — dealer co-op campaigns are likely active right now; check in with Acura regional teams about incremental digital support for the end-of-month push."}]}},
+"Alfa Romeo":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"risk",text:"Alfa Romeo Giulia Quadrifoglio V6 is failing to sell in the U.S. at current pricing, while the same vehicle is effectively sold out in European markets. Used Giulia prices are also declining, suggesting inventory pressure at U.S. dealers.",source:{label:"ItalPassion",url:"https://www.italpassion.fr/en/alfa-romeo/",date:"Apr 13, 2026"}}],"Competitive Moves & Partnerships":[{type:"risk",text:"Reports emerged this week that Stellantis is planning to develop an Alfa Romeo model based on a Chinese Leapmotor platform, despite the brand's public commitment to return to Italian roots.",source:{label:"ClubAlfa",url:"https://www.clubalfa.it/en/category/alfaromeo",date:"Apr 11, 2026"}},{type:"opportunity",text:"Alfa Romeo introduced a new Carbon Performance Package for the Giulia and Stelvio, adding sportier styling, adaptive suspension, and premium audio.",source:{label:"ClubAlfa",url:"https://www.clubalfa.it/en/category/alfaromeo",date:"Apr 10, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"risk",text:"The Leapmotor platform story could damage Alfa Romeo's Italian heritage positioning; monitor customer and dealer reactions and focus messaging on current ICE lineup strengths."},{type:"opportunity",text:"The Carbon Performance Package is a tangible new news hook; engage Alfa Romeo on digital campaign support for Giulia and Stelvio performance variants before next-gen models arrive in 2028."}]}},
+"Audi":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"risk",text:"Audi reported only 29,886 U.S. deliveries in Q1 2026 — the worst quarterly performance since 2012 and less than half of BMW's 84,231 units. EV sales collapsed: Q6 e-tron fell 90% YoY to just 318 units; Q4 e-tron dropped 95% to just 96 units.",source:{label:"BMWBlog",url:"https://www.bmwblog.com/2026/04/13/bmw-vs-audi-us-sales-q1-2026/",date:"Apr 13, 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"The new Audi RS Q5 was spotted in spy shots this week, signaling the first-ever RS designation for Q5 — a halo product to drive showroom traffic.",source:{label:"The Car Guide",url:"https://www.guideautoweb.com/en/articles/",date:"Apr 16, 2026"}},{type:"opportunity",text:"The new Audi Q4 was previewed this week dropping physical buttons for a full digital interface; the Q9 flagship and A2 e-tron are both planned for 2026.",source:{label:"Motor1",url:"https://www.motor1.com/news/793992/new-toyota-models-2026/",date:"Apr 27, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"risk",text:"Audi's U.S. volume crisis (worst Q1 since 2012) and EV sales collapse signal a brand in cost-reduction mode; approach with efficiency-focused, ROI-heavy media solutions only."},{type:"opportunity",text:"Q9 reveal and RS Q5 debut are two major upcoming launch moments; establish relationships now while Q1 pressure creates urgency around rebuilding awareness before those launches land."}]}},
+"Bentley":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"opportunity",text:"Bentley reported its seventh consecutive year of profitability: \u20ac216M operating profit and \u20ac2.6B revenue in 2025, supported by growing Mulliner bespoke demand.",source:{label:"BW Auto World",url:"https://bwautoworld.com/article/bentley-posts-216-million-profit-in-2025-revenue-at-2-6-billion-despite-5-drop-in-deliveries-599214",date:"Mar 25, 2026"}},{type:"risk",text:"Bentley announced a consultation program that could remove up to 275 indirect non-manufacturing positions as the company prepares for BEV transformation.",source:{label:"Audi MediaCenter",url:"https://www.audi-mediacenter.com/en/press-releases/bentley-marks-seventh-consecutive-year-of-profitability-while-continuing-site-transformation-17066",date:"Mar 17, 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Bentley's first all-electric model is progressing toward launch with the Pyms Lane factory transformation underway.",source:{label:"Audi MediaCenter",url:"https://www.audi-mediacenter.com/en/press-releases/bentley-marks-seventh-consecutive-year-of-profitability-while-continuing-site-transformation-17066",date:"Mar 17, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Bentley's financial health is solid; engage Bentley on luxury digital strategy ahead of the EV launch where bespoke storytelling and personalization campaigns will be essential."},{type:"risk",text:"275 potential job eliminations may slow marketing decision-making; maintain warm contacts and allow for longer lead times on proposals."}]}},
+"BMW":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"opportunity",text:"BMW Q1 2026 U.S. deliveries reached 84,231 vehicles, outselling both Audi and Mercedes-Benz and maintaining momentum as the volume leader among German luxury brands in North America. Q1 2026 group financial results drop May 6.",source:{label:"BMWBlog",url:"https://www.bmwblog.com/2026/04/13/bmw-vs-audi-us-sales-q1-2026/",date:"Apr 13, 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"BMW is preparing for the Neue Klasse i3 sedan launch and updated X7 in 2026, while bringing the Alpina brand fully in-house.",source:{label:"Magneto Magazine",url:"https://www.magnetomagazine.com/articles/new-cars-2026-automotive-seductions-to-look-forward-to-this-year/",date:"Jan 8, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"BMW's dominant Q1 U.S. performance and upcoming Neue Klasse i3/X7 launches make this a top-priority account for expanded media investment across multiple nameplates."},{type:"opportunity",text:"Q1 2026 results (May 6) will be a natural outreach moment; prepare a pitch around BMW's sustained growth story and the Neue Klasse launch narrative heading into H2 2026."}]}},
+"Cadillac":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"risk",text:"The Cadillac XT6 has officially reached end-of-life with only 511 units remaining on U.S. dealer lots as of April 23, with no planned North American successor.",source:{label:"GM Authority",url:"https://gmauthority.com/blog/2026/04/new-cadillac-xt6-inventory-winding-down/",date:"Apr 23, 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Cadillac launched the Curated by Cadillac program for the CT5-V Blackwing with 160 hand-applied color options, each unit hand-built at GM's Artisan Innovation Center.",source:{label:"GM Authority",url:"https://gmauthority.com/blog/2026/04/cadillac-ct5-discount-lease-finance-deals-incentives-offers-april-2026/",date:"Apr 26, 2026"}},{type:"opportunity",text:"The 2028 next-gen Cadillac XT5 is confirmed for North America with production starting Q4 2027; the current 2026 XT5 is in its final model year, creating incentive urgency.",source:{label:"GM Authority",url:"https://gmauthority.com/blog/2026/04/cadillac-xt5-discount-lease-finance-deals-incentives-offers-april-2026/",date:"Apr 22, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Curated by Cadillac bespoke program and XT5 final model year are strong co-op and digital campaign hooks; engage dealer networks on end-of-cycle urgency programs and luxury personalization creative."},{type:"risk",text:"The XT6 wind-down eliminates a three-row option from the lineup; avoid pitching three-row SUV creative until the next-gen XT5 arrives."}]}},
+"Chevrolet":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"risk",text:"GM reported Q1 2026 U.S. deliveries of 626,429 vehicles, down 9.7% YoY as the tariff-fueled March 2025 buying surge created a difficult comparable. GM Q1 earnings report April 29.",source:{label:"Yahoo Finance",url:"https://finance.yahoo.com/markets/article/gm-ford-sales-fall-sharply-in-first-quarter-as-affordability-tariff-impacts-drag-down-results-151728515.html",date:"Apr 1, 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"The 2026 Cadillac Lyriq now carries 43% U.S./Canadian parts content (up from 12%), and 2027 Lyriq production begins July 13, 2026 at GM's Spring Hill, Tennessee plant.",source:{label:"GM Authority",url:"https://gmauthority.com/blog/2026/04/cadillac-lyriq-discount-lease-finance-deals-incentives-offers-april-2026/",date:"Apr 14, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"GM's Q1 earnings (April 29) could unlock marketing investment conversations for H2 2026, including the 2027 Silverado launch and CarBravo rollout."},{type:"risk",text:"With Q1 sales down nearly 10% and average transaction prices ~$46K, dealers will feel pressure; focus pitches on efficiency tools and cost-per-lead solutions."}]}},
+"Ford Motor Company":{status:"both",sections:{"Leadership Changes":[{type:"risk",text:"Ford announced a leadership change and business restructuring this week, creating uncertainty heading into the April 29 Q1 earnings call.",source:{label:"CNBC",url:"https://www.cnbc.com/2026/04/27/gm-f-stla-earnings.html",date:"Apr 27, 2026"}}],"Financial Updates":[{type:"risk",text:"Ford Q1 2026 U.S. sales fell 8.8% to 457,315 vehicles, with F-Series down 16% due to ongoing Novelis aluminum supply disruption and EV sales cratering 70%. Full Q1 results release April 29.",source:{label:"Detroit News",url:"https://www.detroitnews.com/story/business/autos/ford/2026/04/02/why-fords-u-s-sales-head-is-optimistic-after-q1-sales-decline/89432787007/",date:"Apr 2, 2026"}},{type:"opportunity",text:"Ford Pro Intelligence software subscriptions reached 865,000 in Q1, and BlueCruise surpassed 10.1 million cumulative hours; the subscription and services business continues growing.",source:{label:"Autobody News",url:"https://www.autobodynews.com/news/q1-auto-sales-decline-6-as-aluminum-shortage-hits-ford-f-series-hybrid-records-continue",date:"Apr 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Ford's Bronco Sport set a Q1 sales record (+5%), Explorer rose 30%, and Expedition grew 30%, demonstrating strong SUV performance even as trucks struggled.",source:{label:"Detroit News",url:"https://www.detroitnews.com/story/business/autos/ford/2026/04/02/why-fords-u-s-sales-head-is-optimistic-after-q1-sales-decline/89432787007/",date:"Apr 2, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"risk",text:"April 29 is Ford's Q1 earnings call — given the leadership change, Novelis disruption, and EV decline, hold major pitches until after results and H2 2026 guidance tone is clear."},{type:"opportunity",text:"Novelis is expected back at full capacity by May; position now for F-Series campaign support in Q3-Q4 as inventory recovers."}]}},
+"General Motors":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"opportunity",text:"GM Q1 2026 earnings report April 29; Wall Street expects GM to be the strongest of the Detroit Three, projecting GM will meet or exceed full-year EBIT guidance of $13\u201315B.",source:{label:"CNBC",url:"https://www.cnbc.com/2026/04/27/gm-f-stla-earnings.html",date:"Apr 27, 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Stellantis Q1 2026 global shipments rose 12%, including a 4% U.S. increase; GM's domestically produced mix provides a tariff advantage that should show up in margins.",source:{label:"CNBC",url:"https://www.cnbc.com/2026/04/27/gm-f-stla-earnings.html",date:"Apr 27, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"GM's April 29 earnings are the most anticipated Detroit Three result this week; a strong result would be a green light for expanded H2 media investment conversations around CarBravo, the 2027 Silverado, and Cadillac's F1 season."},{type:"opportunity",text:"CarBravo June 2 launch remains on track; initiate conversations with GM dealer network contacts now about co-op digital support for the platform rollout."}]}},
+"Genesis":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Genesis announced at the New York Auto Show it will launch 22 all-new or significantly enhanced models between 2026 and 2030, backed by Hyundai Motor Group's $26B U.S. investment commitment.",source:{label:"The Car Guide",url:"https://www.guideautoweb.com/en/articles/81571/genesis-to-launch-22-new-or-enhanced-models-by-2030/",date:"Apr 1, 2026"}},{type:"opportunity",text:"Interior details of the Genesis GV90 flagship electric SUV leaked this week, revealing a near-production-ready design with a 24-inch rolling screen and coach-door variant; expected in H2 2026.",source:{label:"Electrek",url:"https://electrek.co/2026/04/08/genesis-gv90-interior-leaks-next-level-luxury-big-screens/",date:"Apr 8, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Genesis's 22-model product offensive through 2030, backed by $26B in U.S. manufacturing investment and a GV90 launch coming this year, makes this one of the most active luxury brand conversations of 2026."},{type:"opportunity",text:"The GV90 launch will be Genesis's biggest single product moment ever; reach out now to position for halo launch media planning before budgets are committed."}]}},
+"Honda":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"risk",text:"American Honda Q1 2026 U.S. sales fell 4.2% to 336,830 units; Honda set an all-time Q1 hybrid record at 95,882 units, with the CR-V and Accord each exceeding 55% hybrid mix.",source:{label:"Autobody News",url:"https://www.autobodynews.com/news/q1-auto-sales-decline-6-as-aluminum-shortage-hits-ford-f-series-hybrid-records-continue",date:"Apr 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Honda previewed the all-new Prelude revival at the New York Auto Show in hybrid form, generating significant consumer interest and providing a strong launch media hook for H2 2026.",source:{label:"Auto Connected Car News",url:"https://www.autoconnectedcar.com/2026/04/nyautoshow-round-up-new-vehicles-revealed-by-hyundai-subaru-kia-volkswagen-infiniti-genesis-chrysler-dodge-nissan-honda/",date:"Apr 2026"}},{type:"opportunity",text:"Honda's ZERO Series EVs (0 Saloon and 0 SUV) are targeting U.S. launch in 2026, with production at Honda's new Ohio EV Hub.",source:{label:"U.S. News Cars",url:"https://cars.usnews.com/cars-trucks/advice/future-cars",date:"ongoing"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Honda's all-time Q1 hybrid record (95,882 units) and the Prelude revival announcement create two strong conversation openers right now."},{type:"risk",text:"Overall Q1 sales declined 4.2% and Honda previously disclosed a $1.7B operating loss; lead with efficiency-focused, measurable solutions and defer large brand awareness pitches to H2."}]}},
+"Hyundai":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Hyundai debuted the Boulder Concept SUV at the New York Auto Show, previewing a production midsize pickup truck by 2030; CEO confirmed Hyundai will launch 36 new or updated models in North America through 2030.",source:{label:"Motor1",url:"https://www.motor1.com/news/791883/hyundai-genesis-launch-58-vehicles/",date:"Apr 1, 2026"}},{type:"opportunity",text:"Hyundai's Georgia-built Ioniq 5 rose 14% in Q1 to 9,790 units while the Korea-built Ioniq 6 fell 75% due to tariff exposure — Hyundai's domestic manufacturing advantage is a real competitive differentiator.",source:{label:"Autobody News",url:"https://www.autobodynews.com/news/q1-auto-sales-decline-6-as-aluminum-shortage-hits-ford-f-series-hybrid-records-continue",date:"Apr 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Hyundai's Georgia plant-built EV advantage is a compelling 'made in America' story; use this to open conversations about targeted digital campaigns emphasizing domestic production for the Ioniq 5."},{type:"opportunity",text:"The 36-model North American product offensive and Boulder concept signal a brand in growth mode; propose a long-term campaign partnership framework tied to the launch cadence through 2030."}]}},
+"Infiniti":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Infiniti debuted the QX65 coupe-SUV concept at the New York Auto Show, previewing a new nameplate above the QX60 targeting buyers cross-shopping the BMW X6 and Mercedes GLE Coupe.",source:{label:"Auto Connected Car News",url:"https://www.autoconnectedcar.com/2026/04/nyautoshow-round-up-new-vehicles-revealed-by-hyundai-subaru-kia-volkswagen-infiniti-genesis-chrysler-dodge-nissan-honda/",date:"Apr 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"The QX65 concept reveal is the most significant Infiniti product news in years; reach out to Infiniti marketing now about positioning ahead of any production announcement."},{type:"risk",text:"Until production confirmation, Infiniti's U.S. volume remains constrained; focus conversations on the QX65 concept reveal as a teaser campaign opportunity."}]}},
+"Jaguar":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Jaguar's first-ever production EV (the I-Type 4-door GT) is expected to launch in 2027 with pricing well above $100,000; this is a prime window for early launch media planning conversations.",source:{label:"TopSpeed",url:"https://www.topspeed.com/future-cars/",date:"Mar 10, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Jaguar's 2027 I-Type debut will be the brand's complete reinvention moment; engage Jaguar North America now while the competitive landscape and its budget are being shaped."},{type:"risk",text:"JLR continues to face financial pressure with 0\u20132% EBIT margin guidance for FY2026; maintain realistic expectations on Jaguar's near-term North America media budget."}]}},
+"Kia":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"opportunity",text:"Kia set a Q1 2026 U.S. sales record with 207,015 units (+4% YoY), with the Telluride at an all-time quarterly high of 35,928 units (+20%), and hybrid volume jumping 73% — the highest quarterly hybrid total in company history.",source:{label:"Autobody News",url:"https://www.autobodynews.com/news/q1-auto-sales-decline-6-as-aluminum-shortage-hits-ford-f-series-hybrid-records-continue",date:"Apr 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Kia launched the all-new EV4 compact electric sedan this week, with 'perfect timing' as Tesla Model 3 faces countertariffs and the Polestar 2 is no longer imported.",source:{label:"The Car Guide",url:"https://www.guideautoweb.com/en/articles/81571/genesis-to-launch-22-new-or-enhanced-models-by-2030/",date:"Apr 2026"}},{type:"opportunity",text:"The 2026 Kia EV6 received a $5,000 price cut this week, making it one of the most aggressively priced EVs in its segment.",source:{label:"Electrek",url:"https://electrek.co/",date:"Apr 24, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Kia's Q1 record sales, new EV4 launch, and $5,000 EV6 price cut happening simultaneously make this one of the most active and media-ready accounts this week."},{type:"opportunity",text:"Kia and BraunAbility announced a PV5 WAV collaboration at the New York Auto Show; this signals Kia's commercial fleet ambitions and may open conversations about fleet-targeting digital programs."}]}},
+"Land Rover":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"risk",text:"JLR's ongoing financial recovery continues to affect Land Rover budget planning; the brand maintained 0\u20132% EBIT margin guidance for the group in FY2026.",source:{label:"WardsAuto",url:"https://www.wardsauto.com/news/jlr-clears-distinct-powertrain-paths-for-jaguar-land-rover-despite-financi/812395/",date:"Feb 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"The all-electric Range Rover with 800V architecture is approaching its H1 2026 order book opening — one of the most significant luxury EV launches of the year.",source:{label:"TopSpeed",url:"https://www.topspeed.com/future-cars/",date:"Mar 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Electric Range Rover order books opening in H1 2026 is an imminent launch window; engage Land Rover marketing now — financial constraints make efficient digital placements with measurable conversion an especially strong pitch angle."}]}},
+"Lexus":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"The all-new Lexus ES is now at dealers for 2026 in either pure EV (up to 300-mile range) or hybrid form — a first for the nameplate.",source:{label:"Motor1",url:"https://www.motor1.com/news/793992/new-toyota-models-2026/",date:"Apr 24, 2026"}},{type:"opportunity",text:"Toyota announced the all-new 2027 Highlander (April 23), creating launch media planning windows for both Toyota and Lexus group nameplates.",source:{label:"Toyota USA Newsroom",url:"https://pressroom.toyota.com/",date:"Apr 23, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"The Lexus ES EV launch is live now — engage Lexus on EV-specific digital campaign support, including conquest campaigns against Mercedes E-Class and BMW 5 Series shoppers."},{type:"opportunity",text:"The 2027 Highlander announcement opens a forward planning conversation with Toyota/Lexus; begin positioning for Highlander launch media now."}]}},
+"Lincoln":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"risk",text:"Lincoln Q1 2026 sales dipped 0.5% to 29,015 units, with Corsair production ending and Nautilus declining 11%; Navigator (+6.5%) and Aviator (+31% to a Q1 record) were bright spots.",source:{label:"Detroit News",url:"https://www.detroitnews.com/story/business/autos/ford/2026/04/02/why-fords-u-s-sales-head-is-optimistic-after-q1-sales-decline/89432787007/",date:"Apr 2, 2026"}}],"Competitive Moves & Partnerships":[{type:"neutral",text:"No notable updates this week."}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Lincoln Aviator's record Q1 (+31%) is a genuine bright spot; focus Lincoln conversations on the Aviator as the brand's momentum vehicle."},{type:"risk",text:"Corsair discontinuation and Nautilus decline reduce Lincoln's addressable media portfolio; approach with targeted, model-specific solutions rather than brand-level awareness campaigns."}]}},
+"Mazda":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"The all-new 2026 Mazda CX-5 is now at dealers with pricing from $29,990\u2013$39,990; CEO Tom Donnelly confirmed the CX-5 is the brand's primary volume recovery vehicle for 2026.",source:{label:"Consumer Reports",url:"https://www.consumerreports.org/cars/new-cars-on-the-horizon-a1920770135/",date:"Apr 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"The new CX-5 is live at dealers now and generating positive media coverage; reach out this week about launch campaign support while the product is fresh."},{type:"risk",text:"Mazda recorded eight consecutive months of U.S. sales declines in Q1 2026 (down 14.9%); despite the new CX-5, budget conservatism is likely."}]}},
+"Mercedes-Benz":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Mercedes-Benz Q1 2026 U.S. sales reached 78,500 units, and the brand is launching 16 new vehicles in 2026 including GLE and GLS refreshes, a new CLA, new GLB, and the Maybach SL 680 Monogram Series.",source:{label:"Motor1",url:"https://www.motor1.com/news/793992/new-toyota-models-2026/",date:"Apr 24, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"With 16 new model launches in 2026, Mercedes is in active investment mode; propose an integrated digital campaign support program across GLE, GLS, CLA, and Maybach launches through H2 2026."}]}},
+"MINI":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"BMW Group continues to invest in MINI's electrification with the refreshed Cooper SE and Countryman E in the 2026 lineup.",source:{label:"WardsAuto",url:"https://www.wardsauto.com/news/automaker-us-sales-roundup-for-2025/809790/",date:"Jan 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"MINI's BMW Group connection and urban EV positioning make it a strong co-pitch alongside BMW for younger, urban audience digital programs."}]}},
+"Mitsubishi":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"The 2026 Nissan Rogue PHEV launched this week using the Mitsubishi Outlander PHEV powertrain, confirming Alliance platform-sharing creates new electrified derivatives.",source:{label:"The Car Guide",url:"https://www.guideautoweb.com/en/articles/81592/volvo-opens-orders-for-all-new-ex60/",date:"Apr 16, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"neutral",text:"No notable signals this week. Focus conversations on Outlander PHEV dealer co-op support as the most media-active product in the lineup."}]}},
+"Nissan":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"The 2026 Nissan Rogue PHEV launched this week; first drives have been published from Tennessee and the model fills a critical gap in the electrified crossover segment.",source:{label:"The Car Guide",url:"https://www.guideautoweb.com/en/articles/81592/volvo-opens-orders-for-all-new-ex60/",date:"Apr 16, 2026"}},{type:"risk",text:"The 2026 Nissan Leaf has a new NHTSA recall for high-voltage battery modules that may short circuit; affected owners are advised to park outside.",source:{label:"Franklin County Free Press",url:"https://fcfreepresspa.com/nhtsa-issues-new-recalls-for-lexus-volvo-volkswagen-nissan-and-other-vehicles/",date:"Apr 7, 2026"}},{type:"opportunity",text:"The 2026 Nissan Sentra received a thorough refresh with a 12.3-inch touchscreen, updated styling, ProPilot Assist, and wireless CarPlay/Android Auto.",source:{label:"Consumer Reports",url:"https://www.consumerreports.org/cars/new-cars-on-the-horizon-a1920770135/",date:"Apr 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Rogue PHEV launch and Sentra refresh are two live product news hooks this week; use them to open Nissan marketing conversations about mid-cycle launch support."},{type:"risk",text:"2026 Leaf battery recall will generate negative coverage; be mindful of timing on EV-specific Nissan pitches."}]}},
+"Polestar":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"opportunity",text:"Polestar reported a Q1 2026 quarterly sales record of 13,100+ units globally. Global retail sales rose 34% in full-year 2025 and the company expects low double-digit retail volume growth in 2026.",source:{label:"Motoring Research",url:"https://www.motoringresearch.com/car-news/business/polestar-q1-2026-sales-record/",date:"Apr 9, 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"The 2026 Polestar 3 has been substantially upgraded with 800V architecture, a new Nvidia chip, new motors and batteries, and improved range up to 394 miles; first drives are strongly positive.",source:{label:"Motoring Research",url:"https://www.motoringresearch.com/car-reviews/polestar-3-2026-review/",date:"Apr 23, 2026"}},{type:"opportunity",text:"Polestar 5 four-door GT is confirmed for summer 2026 launch; CEO Michael Lohscheller calls it the 'brand halo car.'",source:{label:"The Truth About Cars",url:"https://www.thetruthaboutcars.com/cars/news-blog/polestar-launches-product-offensive-with-four-new-vehicles-coming-by-2028-45133900",date:"Feb 18, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"opportunity",text:"Polestar won the AUTOBEST 2026 SMARTBEST Award for its Google Maps live lane guidance integration; a strong editorial hook for digital advertising targeting tech-forward EV buyers.",source:{label:"Motoring Research",url:"https://www.motoringresearch.com/car-news/polestar-renault-autobest-2026-awards/",date:"Feb 13, 2026"}}],"Sales Signals":[{type:"opportunity",text:"Polestar's combination of a Q1 sales record, updated Polestar 3 with excellent first-drive reviews, and the imminent Polestar 5 halo launch creates a compelling mid-2026 media investment moment."}]}},
+"Porsche":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Porsche announced the Cayenne Coupe Electric variant this week alongside the standard Cayenne Electric planned for late summer 2026 U.S. delivery; top-spec includes 850kW (1,139 hp), 1,106 lb-ft of torque, and a 2.4-second 0-60 time.",source:{label:"Electrek",url:"https://electrek.co/",date:"Apr 27, 2026"}},{type:"opportunity",text:"Porsche is confirmed to be walking away from its stake in Bugatti Rimac, freeing up investment focus for the Cayenne Electric launch and planned 718 electric sports car for 2027.",source:{label:"Motor1",url:"https://www.motor1.com/news/793992/new-toyota-models-2026/",date:"Apr 24, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"The Cayenne Electric and Cayenne Coupe Electric are both confirmed for 2026, doubling Porsche's EV launch moment into a two-variant campaign story with 200,000+ configurator starts."},{type:"opportunity",text:"Propose conversion-focused digital campaigns (inquiry, test drive booking) to capitalize on the existing intent pool heading into late summer delivery windows."}]}},
+"Rivian":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"opportunity",text:"Rivian reaffirmed full-year 2026 delivery guidance of 62,000\u201367,000 vehicles after reporting 10,365 Q1 deliveries; to hit guidance, Rivian must average 17,200\u201318,900 deliveries per quarter as R2 ramps.",source:{label:"EV Magazine",url:"https://eletric-vehicles.com/rivian/rivian-reaffirms-2026-guidance-implying-a-near-doubling-of-quarterly-deliveries/",date:"Apr 2, 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"THIS WEEK: Rivian officially started 'volume, saleable' production of the R2 midsize SUV at Normal, Illinois on April 22. The R2 Performance Launch Edition at $57,990 is first to market, with customer deliveries by 'end of spring.'",source:{label:"EV Magazine",url:"https://eletric-vehicles.com/rivian/rivian-begins-volume-saleable-production-of-r2-suv/",date:"Apr 22, 2026"}},{type:"opportunity",text:"The R2 directly targets the Tesla Model Y Performance at a nearly identical price point, and Rivian has explicitly named the Model Y as its primary conquest target.",source:{label:"EV Magazine",url:"https://eletric-vehicles.com/rivian/rivian-r2-production-announcement-expected-imminently/",date:"Apr 7, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"R2 production has started and customer deliveries are imminent by 'end of spring' — this is the most time-sensitive outreach window of the year for Rivian. Contact Rivian marketing today about launch digital media and Model Y conquest campaigns."},{type:"opportunity",text:"A Gen 3 autonomy stack with LiDAR will be fitted to R2 vehicles starting in late 2026, creating a second media wave; plan a two-phase campaign structure with launch now and autonomy narrative layering in Q4."}]}},
+"Stellantis":{status:"both",sections:{"Leadership Changes":[{type:"opportunity",text:"Stellantis CEO Antonio Filosa confirmed this week the company is 'focusing on the four brands that really matter' in its restructuring, signaling increased investment behind Ram, Jeep, Dodge, and potentially one other.",source:{label:"Motor1",url:"https://www.motor1.com/news/793992/new-toyota-models-2026/",date:"Apr 27, 2026"}}],"Financial Updates":[{type:"opportunity",text:"Stellantis Q1 2026 global vehicle shipments rose 12% YoY, including a 4% U.S. increase; Jeep accounted for 47% of U.S. sales and Ram Trucks 37%. Stellantis Q1 earnings April 30.",source:{label:"CNBC",url:"https://www.cnbc.com/2026/04/27/gm-f-stla-earnings.html",date:"Apr 27, 2026"}},{type:"risk",text:"Chrysler slashed prices on the refreshed 2027 Pacifica by up to $7,200 vs. the 2026 model, signaling aggressive inventory management and margin pressure.",source:{label:"The Car Guide",url:"https://www.guideautoweb.com/en/articles/81592/volvo-opens-orders-for-all-new-ex60/",date:"Apr 18, 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Dodge revealed the 2026 Durango America250 at the New York Auto Show, a commemorative special edition with 550hp Hurricane SIXPACK engine celebrating the U.S. 250th anniversary.",source:{label:"Auto Connected Car News",url:"https://www.autoconnectedcar.com/2026/04/nyautoshow-round-up-new-vehicles-revealed-by-hyundai-subaru-kia-volkswagen-infiniti-genesis-chrysler-dodge-nissan-honda/",date:"Apr 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Stellantis's Q1 shipments recovery (+12% global) and 'four brands that matter' strategy signal a company getting back on its feet; focus pitches on Ram and Jeep, and wait for April 30 earnings before committing to larger proposals."},{type:"risk",text:"Chrysler's $7,200 Pacifica price cut signals tight margins; defer Chrysler conversations and concentrate Stellantis energy on Jeep, Ram, and Dodge."}]}},
+"Subaru":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"risk",text:"Subaru Q1 2026 U.S. sales fell 14.9%, marking eight consecutive months of year-over-year declines; March fell 23.5%.",source:{label:"Autobody News",url:"https://www.autobodynews.com/news/q1-auto-sales-decline-6-as-aluminum-shortage-hits-ford-f-series-hybrid-records-continue",date:"Apr 2026"}}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Subaru debuted two new SUVs at the New York Auto Show: the Trailseeker (a larger Solterra EV with 280-mile range, NACS charging) and the Uncharted (a twin to the Toyota C-HR EV). Both confirmed for U.S. production.",source:{label:"Consumer Reports",url:"https://www.consumerreports.org/cars/new-cars-on-the-horizon-a1920770135/",date:"Apr 2026"}},{type:"opportunity",text:"The 2027 Subaru Getaway was also shown at the New York Auto Show, signaling a three-EV product offensive from a brand historically associated with AWD and hybrid loyalty.",source:{label:"The Car Guide",url:"https://www.guideautoweb.com/en/articles/81571/genesis-to-launch-22-new-or-enhanced-models-by-2030/",date:"Apr 1, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Subaru's triple EV reveal (Trailseeker, Uncharted, Getaway) is a brand transformation moment; use the electrification pivot as a conversation opener about launch campaign support."},{type:"risk",text:"Eight consecutive months of sales declines signals deep demand pressure; lead with launch-specific performance campaigns rather than brand awareness spending."}]}},
+"Tesla":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"opportunity",text:"Tesla Q1 2026 earnings (reported April 22) beat Wall Street expectations: revenue of $22.39B (+16% YoY), EPS of $0.41 vs. $0.37 expected, gross margin of 21.1% (up 478 bps YoY). FSD subscriptions reached 1.3 million (up 51% YoY).",source:{label:"CNBC",url:"https://www.cnbc.com/2026/04/22/tesla-tsla-q1-2026-earnings-report.html",date:"Apr 22, 2026"}},{type:"risk",text:"Tesla announced it will increase 2026 capital expenditures to over $25B, warning of negative free cash flow in 2026. Musk framed Tesla's future around robotaxis (launched in Dallas/Houston) and Optimus robots rather than car sales.",source:{label:"NPR",url:"https://www.npr.org/2026/04/22/nx-s1-5791653/tesla-earnings-first-quarter-2026",date:"Apr 22, 2026"}}],"Competitive Moves & Partnerships":[{type:"risk",text:"Tesla is sitting on a record 50,000 unsold EVs in U.S. inventory as of Q1 2026; the Model S and Model X were officially discontinued April 1.",source:{label:"InsideEVs",url:"https://insideevs.com/news/791999/tesla-unsold-inventory-record-q1-2026/",date:"Apr 2026"}},{type:"opportunity",text:"Tesla launched unsupervised Robotaxi rides in Dallas and Houston in April 2026; Musk confirmed the Optimus v3 reveal is targeted for 'late July/August.'",source:{label:"Tesla SEC Filing",url:"https://www.sec.gov/Archives/edgar/data/0001318605/000162828026026551/exhibit991.htm",date:"Apr 22, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week. Tesla operates without a traditional paid media structure."}],"Sales Signals":[{type:"risk",text:"Tesla's record unsold inventory, discontinued flagship lineup, and Musk's full strategic pivot to AI/robotics create a competitive opening; competitors (Rivian, Hyundai, BMW, Kia) should use Tesla's transitional moment as a conquest opportunity."},{type:"opportunity",text:"Tesla's $25B+ CapEx commitment and Robotaxi/Optimus focus creates an opening for traditional OEMs to claim the 'premium EV' messaging position as Tesla voluntarily vacates it."}]}},
+"Toyota":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Toyota announced the all-new 2027 Highlander this week (April 23), signaling the next-generation of its best-selling three-row SUV; separately, Toyota confirmed six new 2026 models including the C-HR EV (now at dealers), hybrid-only RAV4, bZ EV, and Lexus ES.",source:{label:"Motor1",url:"https://www.motor1.com/news/793992/new-toyota-models-2026/",date:"Apr 24, 2026"}},{type:"opportunity",text:"The 2026 RAV4 is now hybrid-only (including PHEV) for the first time in the nameplate's history; the PHEV delivers 320 hp and 50 miles of electric-only range.",source:{label:"Consumer Reports",url:"https://www.consumerreports.org/cars/new-cars-on-the-horizon-a1920770135/",date:"Apr 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"Toyota's six-model 2026 launch wave and 2027 Highlander announcement create a multi-product, multi-quarter campaign opportunity; propose an integrated media program."},{type:"opportunity",text:"RAV4 going hybrid-only is Toyota's biggest single powertrain statement in decades; a highly media-friendly news hook for digital campaigns targeting hybrid-curious shoppers."}]}},
+"Volkswagen":{status:"opportunity",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"The new Audi Q4 was previewed this week dropping physical buttons for a full digital interface with passenger-side screen; VW Group's design standardization continues to generate debate.",source:{label:"Motor1",url:"https://www.motor1.com/news/793992/new-toyota-models-2026/",date:"Apr 27, 2026"}},{type:"opportunity",text:"Volkswagen Group confirmed 20 new models launching in 2026, with U.S.-relevant products including the new Atlas (2027), Scout Terra and Traveler (2027), and Audi Q9.",source:{label:"Motor1",url:"https://www.motor1.com/news/793992/new-toyota-models-2026/",date:"Apr 24, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"VW Group's 20-model launch slate for 2026 and the Scout brand debut in 2027 represent a multi-year media investment opportunity; propose group-level coordinated digital campaign support."},{type:"opportunity",text:"The Scout Terra and Traveler (2027) will be VW Group's first American-designed and produced trucks; begin Scout-specific relationship building now as the brand is building its marketing infrastructure from scratch."}]}},
+"Volvo":{status:"both",sections:{"Leadership Changes":[{type:"neutral",text:"No notable updates this week."}],"Financial Updates":[{type:"neutral",text:"No notable updates this week."}],"Competitive Moves & Partnerships":[{type:"opportunity",text:"Volvo opened order books for the all-new EX60 electric mid-size SUV this week, with first deliveries confirmed for fall 2026 in North America; the EX60 competes directly against the Audi Q6 e-tron, Cadillac Lyriq, Porsche Macan Electric, and Tesla Model Y.",source:{label:"The Car Guide",url:"https://www.guideautoweb.com/en/articles/81592/volvo-opens-orders-for-all-new-ex60/",date:"Apr 18, 2026"}},{type:"opportunity",text:"Volvo confirmed the EX60 is built on 800V architecture with structural battery integration, positioning it as a genuine premium alternative to the Porsche Macan Electric at a lower price point.",source:{label:"The Car Guide",url:"https://www.guideautoweb.com/en/articles/81592/volvo-opens-orders-for-all-new-ex60/",date:"Apr 18, 2026"}}],"Digital Advertising & Publisher Activity":[{type:"neutral",text:"No notable updates this week."}],"Sales Signals":[{type:"opportunity",text:"EX60 order books opened this week and fall deliveries are confirmed — this is the ideal window for launch media planning conversations with Volvo."},{type:"risk",text:"The Volvo EX90 is no longer being imported to Canada due to countertariffs; monitor for any similar U.S.-market disruptions that could affect EX60 pricing or availability."}]}}
+};
+const TOP3_OPPS=[{'oem': 'Rivian', 'text': "Rivian officially started 'volume, saleable' production of the R2 midsize SUV on April 22 — the brand's most important milestone since its IPO. Customer deliveries begin by 'end of spring' at $57,990, directly targeting the Tesla Model Y Performance. This is the most time-sensitive launch media opportunity of the week.", 'url': 'https://eletric-vehicles.com/rivian/rivian-begins-volume-saleable-production-of-r2-suv/', 'src': 'EV Magazine'}, {'oem': 'Kia', 'text': 'Kia set a Q1 2026 U.S. sales record (207,015 units), launched the new EV4 sedan, AND cut the EV6 price by $5,000 — all in the same week. Three simultaneous media hooks across hybrid, new launch, and repricing make Kia the highest-priority outreach target this week.', 'url': 'https://www.autobodynews.com/news/q1-auto-sales-decline-6-as-aluminum-shortage-hits-ford-f-series-hybrid-records-continue', 'src': 'Autobody News'}, {'oem': 'Porsche', 'text': 'Porsche announced both the Cayenne Electric AND Cayenne Coupe Electric for late summer 2026 U.S. delivery this week, with 200,000+ configurator starts already recorded. Two variants, exceptional pre-launch demand — engage Porsche now on conversion-focused launch campaign support before budgets lock.', 'url': 'https://electrek.co/', 'src': 'Electrek'}];
+const TOP3_RISKS=[{'oem': 'Ford Motor Company', 'text': 'Ford faces a convergent risk storm this week: a mid-week leadership change and restructuring, Q1 U.S. sales down 8.8%, F-Series down 16% from Novelis aluminum disruption, and Q1 earnings on April 29 expected to show continued H1 weakness. Hold major pitches until after the earnings call and guidance commentary is clear.', 'url': 'https://www.cnbc.com/2026/04/27/gm-f-stla-earnings.html', 'src': 'CNBC'}, {'oem': 'Tesla', 'text': "Tesla is sitting on a record 50,000 unsold U.S. EVs, discontinued the Model S and Model X on April 1, and warned of negative free cash flow in 2026 after raising CapEx to $25B+. Musk is pivoting Tesla's entire narrative to robotaxis and Optimus robots — competitors should use this brand vacuum to run conquest campaigns now.", 'url': 'https://insideevs.com/news/791999/tesla-unsold-inventory-record-q1-2026/', 'src': 'InsideEVs'}, {'oem': 'Audi', 'text': "Audi reported only 29,886 U.S. deliveries in Q1 2026 — the worst quarterly result since 2012 and less than half BMW's 84,231 units. EV collapse was severe: Q6 e-tron fell 90% to just 318 units. Audi is likely in cost-reduction mode; approach with ROI-first, efficiency-focused media solutions only.", 'url': 'https://www.bmwblog.com/2026/04/13/bmw-vs-audi-us-sales-q1-2026/', 'src': 'BMWBlog'}];
+const TRENDS=[{'tag': 'Hybrid Wave — Q1 Record Across Japanese & Korean Brands', 'text': "Hybrid vehicles reached a record 26% of the Q1 2026 U.S. market, driven almost entirely by non-EV electrification. Honda hit an all-time Q1 hybrid record at 95,882 units; Kia's hybrid volume jumped 73%; Hyundai's overall hybrid surge continued for a third consecutive record period. Toyota's decision to make the RAV4 hybrid-only is the formal industry acknowledgment that this is the dominant powertrain transition of 2026.", 'oems': 'Honda, Kia, Hyundai, Toyota, Subaru'}, {'tag': 'Detroit Three Earnings Convergence — April 29–30', 'text': "All three Detroit automakers report Q1 earnings this week: GM on April 29 (strongest outlook, overweight rating), Ford on April 29 (leadership change + Novelis disruption headwind), and Stellantis on April 30 (recovery story with +12% global shipments). Sales teams should pause major pitches to Ford and Stellantis until guidance tone is clear, while treating GM's result as a potential green light for H2 media investment conversations.", 'oems': 'General Motors, Ford, Stellantis, Chevrolet'}, {'tag': 'EV Repricing as Tax Credit Absence Bites', 'text': "The September 2025 expiration of the federal EV tax credit is now showing up directly in OEM pricing. Kia cut the EV6 price by $5,000 this week, Chrysler slashed the 2027 Pacifica by $7,200, and Ford discontinued the F-150 Lightning entirely. BEV sales fell 28% industry-wide in Q1 2026. OEMs with domestically produced EVs (Hyundai's Ioniq 5, GM's Lyriq) are holding up significantly better than import-dependent brands.", 'oems': 'Kia, Ford, Stellantis, Hyundai, GM, Polestar'}, {'tag': 'New York Auto Show Product Offensive', 'text': "The 2026 New York Auto Show generated multiple debuts that create immediate media planning opportunities: Hyundai's Boulder Concept (body-on-frame pickup preview), Genesis's 22-model product plan, Infiniti's QX65 coupe-SUV concept, Subaru's triple EV reveal (Trailseeker, Uncharted, Getaway), Kia's EV4, and Dodge's America250 Durango. Sales teams should reach out to all these brands while show momentum is active.", 'oems': 'Hyundai, Genesis, Infiniti, Subaru, Kia, Dodge'}, {'tag': "Tesla's Brand Vacuum Creates Conquest Window", 'text': "Tesla's deliberate repositioning from premium EV brand to AI/robotics company is creating an unprecedented competitive opening. The Model S and X are gone, 50,000 EVs sit unsold, CapEx is pivoting to Optimus robots and robotaxi infrastructure. Premium EV competitors — Porsche, BMW, Genesis, Rivian — have a rare window to claim the luxury EV positioning Tesla is voluntarily vacating.", 'oems': 'Tesla, Rivian, Porsche, BMW, Genesis, Kia'}, {'tag': 'Motorsports as OEM Brand Marketing Strategy', 'text': "Multiple OEMs are using motorsports as a direct marketing platform this week, not just a racing program. Acura's first-ever Indy 500 branding (May 24), Cadillac's F1 debut at the Australian Grand Prix, Ford's F1 Red Bull activation as 'America's F1 team,' and Genesis's LMDh racing program all reflect a broader industry shift to motorsports as a digital-first mass audience strategy.", 'oems': 'Acura, Cadillac, Ford, Genesis'}];
 
-const OEMS = [
-{name:"Acura",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Acura posted Q1 2026 U.S. sales of 32,352 units, up 5.2% year-over-year, outperforming most luxury rivals and placing ahead of Cadillac. Growth was driven by the newly launched ADX crossover, Integra (up 25%+), and strong MDX performance.",source:"AutoEvolution",url:"https://www.autoevolution.com/news/q1-us-auto-sales-2026-bmw-leads-the-premium-pack-mercedes-benz-inches-closer-to-lexus-audi-s-awol-268473.html",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Acura is expanding into the NTT INDYCAR SERIES for the first time, with branding on a Meyer Shank Racing Honda at the 2026 Indianapolis 500 in May — the brand's first-ever Indy 500 appearance. The first four INDYCAR races of 2026 generated the largest TV audiences since 2008.",source:"Acura Newsroom",url:"https://acuranews.com/en-US/releases/release-00b08be100b45a4ab9ae5793dd0d4199-acura-expands-motorsports-footprint-with-multi-race-indycar-presence-including-prestigious-indy-500",date:"Apr 22, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[
-{type:"opp",text:"Despite tariff uncertainty, Acura is holding its media spend and launching a full-funnel campaign for the new ADX compact SUV. Acura is not adjusting wholesale pricing at this time.",source:"Adweek",url:"https://briefly.co/anchor/Marketing_tech/story/media-buying-briefing-auto-marketers-arent-slowing-ad-spend-in-face-of-tariff-tension",date:"Apr 2025"}
-]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Acura is one of the few luxury brands posting positive Q1 growth (+5.2%) in a broadly contracting market, driven by the new ADX entry crossover and Integra momentum. A strong talking point vs. struggling German competitors.",source:"AutoEvolution",url:"https://www.autoevolution.com/news/q1-us-auto-sales-2026-bmw-leads-the-premium-pack-mercedes-benz-inches-closer-to-lexus-audi-s-awol-268473.html",date:"Apr 14, 2026"},
-{type:"opp",text:"Nearly two-thirds of Acuras sold in the U.S. are built domestically, giving dealers a strong tariff-shield message with cost-conscious buyers this spring.",source:"Patriot Acura",url:"https://www.patriotacura.com/tariffs.htm",date:"Apr 2025"},
-{type:"opp",text:"The April 2026 MDX lease deal ($569/month for loyalty buyers) positions Acura as a strong value play vs. Lexus RX and BMW X5 in the three-row luxury SUV space.",source:"Autoblog",url:"https://www.autoblog.com/carbuying/2026-acura-mdx-lease-deal-april",date:"Apr 14, 2026"}
-]}
-]},
-
-{name:"Alfa Romeo",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Alfa Romeo U.S. Q1 2026 sales were a deeply disappointing 919 units, down 52.9% year-over-year, reflecting the aging Giulia/Stelvio lineup and limited dealer inventory. Global 2025 sales exceeded 73,000 units (+20% YoY) but North America is struggling.",source:"Carscoops",url:"https://www.carscoops.com/2026/03/alfa-romeo-global-sales-performance/",date:"Mar 7, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Alfa Romeo unveiled updated Tonale and Stelvio SUVs at the 2026 New York Auto Show, with both confirmed on sale through at least 2027. The Tonale features a refreshed Scudetto grille and a 268hp 2.0L turbo engine.",source:"SpeedMe",url:"https://speedme.ru/en/posts/id44292-alfa-romeo-updates-tonale-and-stelvio-suvs-at-2026-ny-auto-show",date:"Apr 17, 2026"},
-{type:"opp",text:"Alfa Romeo's Giulia and Stelvio Quadrifoglio V6 performance variants are back in production as of April 2026 after a six-month hiatus, giving dealers a halo product to drive showroom traffic.",source:"Autocar",url:"https://www.autocar.co.uk/car-news/new-cars/alfa-romeo-giulia-and-stelvio-quadrifoglio-back-sale-ev-successors-delayed",date:"Feb 27, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"Q1 2026 U.S. sales cratered to 919 units (-52.9% YoY). With Giulia/Stelvio aging out and the Junior not yet available in the U.S., Alfa is in a product gap with minimal inventory to support advertising investment.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"risk",text:"Stellantis Investor Day is May 21, 2026 — watch for updated Alfa Romeo U.S. strategy and confirmation on North American production timelines. Any pivots could affect OEM ad budget allocations.",source:"Stellantis IR",url:"https://www.stellantis.com/en/news/press-releases/2026/april/stellantis-to-announce-first-quarter-2026-financial-results-on-april-30",date:"Apr 16, 2026"}
-]}
-]},
-{name:"Audi",status:"both",sections:[
-{title:"Leadership Changes",bullets:[
-{type:"opp",text:"Vito Paladino officially took over as President of Audi of America on April 1, 2026. He previously led Audi Canada to become Canada's top-selling premium brand in 2022. He inherits a brand facing steep U.S. sales declines and significant tariff exposure with no U.S. production.",source:"Yahoo Finance",url:"https://finance.yahoo.com/news/audi-names-leader-u-operations-120001584.html",date:"Mar 5, 2026"}
-]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Audi U.S. Q1 2026 deliveries plunged 30% YoY to just 29,886 units — the first time since 2012 the brand failed to clear 30,000 units in a quarter. EV sales collapsed: Q4 e-tron down 93% to 90 units; Q6 e-tron down 90% to 309 units.",source:"Autoblog",url:"https://www.autoblog.com/news/audis-usa-sales-q1-2026",date:"Apr 13, 2026"},
-{type:"risk",text:"Audi raised prices across most 2026 models by $800–$4,100, passing tariff costs directly to consumers while adding three years of prepaid maintenance. The brand has no U.S. manufacturing, making it uniquely vulnerable vs. BMW and Mercedes-Benz.",source:"Automotive News",url:"https://www.autonews.com/volkswagen/an-vw-audi-q1-sales-0413/",date:"Apr 13, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Audi is in its largest-ever product refresh with the new Q3, Q7, flagship Q9, and RS5 all ramping through 2026. Analysts cite fresh product as the primary recovery path, though full impact won't show until Q3/Q4.",source:"Audi Club NA",url:"https://audiclubna.org/audis-u-s-sales-plunge-30-percent-in-q1-but-a-massive-new-product-wave-is-coming/",date:"Apr 13, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"With a 30% Q1 sales drop and no U.S. production, Audi is the most tariff-exposed luxury import brand in the market. Expect cautious ad spend in Q2 while new leadership stabilizes strategy.",source:"Autoblog",url:"https://www.autoblog.com/news/audi-sales-slump-could-get-worse-in-2026",date:"Feb 25, 2026"},
-{type:"risk",text:"Audi's EV lineup essentially collapsed in Q1 (multiple models down 90%+). Conquest opportunities for BMW, Cadillac, and Genesis from Audi EV owners are real and time-sensitive.",source:"Carscoops",url:"https://www.carscoops.com/2026/04/audi-us-sales-q1-2026/",date:"Apr 13, 2026"},
-{type:"opp",text:"The A5 (+6%) and A6 (+9%) were Q1's only bright spots, suggesting sedan buyers remain loyal. New leadership may lean into a differentiated sedan story heading into summer.",source:"Autoblog",url:"https://www.autoblog.com/news/audis-usa-sales-q1-2026",date:"Apr 13, 2026"}
-]}
-]},
-
-{name:"Bentley",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Bentley Q1 2026 U.S. sales were approximately 645 units, down 19.4% vs. Q1 2025, in line with broader ultra-luxury segment softness tied to high import tariffs.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Bentley confirmed this week that its first fully electric vehicle is on track for reveal in 2026, marking a pivotal milestone in its Beyond100+ transformation. The company also released its fourth annual Sustainability Report, noting lowest-ever fleet CO₂ emissions and carbon-neutral operations in Crewe.",source:"Bentley Media",url:"https://www.bentleymedia.com/en/newsitem/1793-bentley-motors-publishes-fourth-annual-sustainability-report-as-beyond100-strategy-delivers-progress-amid-global-transition",date:"Apr 22, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[
-{type:"opp",text:"Bentley appointed global actress Priyanka Chopra Jonas as a brand ambassador, launching a documentary-style campaign filmed at Sony Studios — a broader push to expand cultural reach and influence among aspirational luxury buyers.",source:"Bentley Media",url:"https://www.bentleymedia.com/en/newsitem/1789-priyanka-chopra-jonas-revealed-as-brand-ambassador-for-bentley-in-new-campaign",date:"Apr 10, 2026"}
-]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"The upcoming first-ever all-electric Bentley reveal later in 2026 will generate significant media attention. This is a rare new-model moment from an ultra-luxury brand worth monitoring for content alignment.",source:"Automotive World",url:"https://www.automotiveworld.com/news/bentley-confirms-first-electric-model-reveal-in-2026/",date:"Apr 22, 2026"},
-{type:"risk",text:"Bentley U.S. sales are down 19.4% and UK manufacturing tariff exposure is a headwind. Expect conservative marketing budgets in H1 2026 with a potential uptick around the EV reveal.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]}
-]},
-{name:"BMW",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"BMW sold 84,231 vehicles in Q1 2026 in the U.S., down just 3.9% — a significantly better result than most import luxury rivals. BMW retains its position as the top-selling premium brand. SUVs were a standout: X3 up 58% YoY, X5 gaining 7.1% to 18,680 units.",source:"BMW Pressroom",url:"https://www.press.bmwgroup.com/usa/article/detail/T0456837EN_US?language=en_US",date:"Apr 1, 2026"},
-{type:"risk",text:"BMW global operating profit fell 11.5% to €10.2B in 2025 — its lowest since the pandemic. BMW expects 2026 automotive EBIT margin of 4%–6%, with tariffs forecast to shave ~1.25 percentage points off margins.",source:"Euronews",url:"https://www.euronews.com/business/2026/03/12/bmw-profits-fall-115-to-pandemic-era-low-after-tariffs-and-china-slump",date:"Mar 12, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"BMW unveiled the redesigned 2027 7 Series on April 22 simultaneously in New York and Beijing, introducing Neue Klasse technology (panoramic iDrive, BMW Passenger Screen, Dolby Atmos) to the luxury segment for the first time. Production starts July 2026.",source:"BMW Blog",url:"https://www.bmwblog.com/2026/04/22/bmw-7-series-facelift-nyc-debut/",date:"Apr 22, 2026"},
-{type:"opp",text:"BMW North America President Mackensen set 'ambitious' 2026 U.S. sales targets and confirmed the brand's commitment to maintaining its sedan lineup despite SUV-dominant market trends. He called the U.S. 'critical and profitable.'",source:"CNBC",url:"https://www.cnbc.com/2026/04/22/bmw-sedan-7-series.html",date:"Apr 22, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"BMW is the clearest outperformer in luxury Q1 2026, outselling Audi by nearly 3-to-1. Fresh product pipeline (new iX3 Neue Klasse EV, new X5, new 3 Series in H2) makes BMW one of the most active potential OEM advertisers heading into spring.",source:"BMW Blog",url:"https://www.bmwblog.com/2026/04/13/bmw-vs-audi-us-sales-q1-2026/",date:"Apr 13, 2026"},
-{type:"opp",text:"BMW's X3 surge (+58% in Q1) confirms strong buyer appetite for refreshed luxury crossovers — a key message for OEM digital advertising campaigns targeting in-market luxury shoppers.",source:"TFLcar",url:"https://tflcar.com/2026/04/q1-2026-new-car-sales-report-biggest-winners/",date:"Apr 13, 2026"},
-{type:"risk",text:"German-built sedans face a 15% import tariff. BMW has raised model-year prices 1%–3% in response. Watch for consumer price sensitivity signals in Q2.",source:"Autoblog",url:"https://www.autoblog.com/news/bmw-prices-are-rising-again-for-2026-why-now-might-be-the-time-to-buy",date:"Dec 14, 2025"}
-]}
-]},
-
-{name:"Cadillac",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Cadillac Q1 2026 U.S. sales fell 26% to 31,098 units, among the steepest GM brand declines, reflecting difficult year-ago comparisons and soft EV demand. The Blazer EV plunged 83% to just 1,077 units.",source:"Cadillac Society",url:"https://cadillacsociety.com/2026/04/02/cadillac-sales-numbers-united-states-first-quarter-2026-q1/",date:"Apr 2, 2026"},
-{type:"opp",text:"Cadillac's EV sub-segment (Lyriq, Optiq, Vistiq, Escalade IQ) grew 20% in Q1 to over 9,500 units, keeping Cadillac as the luxury EV leader — a key OEM advertising differentiator vs. Audi (whose EV sales collapsed).",source:"GM Authority",url:"https://gmauthority.com/blog/2026/04/gm-sales-figures-numbers-results-united-states-q1-2026/",date:"Apr 2, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Cadillac is actively running conquest campaigns in April 2026 with a $2,000 competitive cash allowance for current owners of BMW, Audi, Mercedes, Lexus, Genesis, Tesla, Rivian, and Polestar — directly targeting European and EV luxury segments.",source:"GM Authority",url:"https://gmauthority.com/blog/2026/04/cadillac-lyriq-discount-lease-finance-deals-incentives-offers-april-2026/",date:"Apr 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Cadillac's EV segment (+20%) is a genuine bright spot in a down quarter. Sales reps should frame Cadillac as the EV luxury leader with a U.S.-built portfolio that sidesteps tariff concerns.",source:"GM Authority",url:"https://gmauthority.com/blog/2026/04/gm-sales-figures-numbers-results-united-states-q1-2026/",date:"Apr 2, 2026"},
-{type:"opp",text:"Active conquest incentives ($2,000 off for switching from competitors) signal Cadillac is in growth mode — a strong hook for OEM digital advertising targeting import luxury or EV conquest audiences.",source:"GM Authority",url:"https://gmauthority.com/blog/2026/04/cadillac-lyriq-discount-lease-finance-deals-incentives-offers-april-2026/",date:"Apr 2026"},
-{type:"risk",text:"Escalade has no national deal in April 2026 — dealers set market pricing — which may signal strong residual demand but limits near-term promo advertising hooks.",source:"GM Authority",url:"https://gmauthority.com/blog/2026/04/cadillac-escalade-discount-lease-finance-deals-incentives-offers-april-2026/",date:"Apr 13, 2026"}
-]}
-]},
-{name:"Chevrolet",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Chevrolet Q1 2026 U.S. deliveries fell 7.9% to 407,747 units, with notable weakness in the Blazer EV (-83%) and Blazer ICE (-26%). Silverado LD bucked the trend, up nearly 8%, supported by fleet demand and post-aluminum-supply recovery.",source:"GM Authority",url:"https://gmauthority.com/blog/2026/04/gm-sales-figures-numbers-results-united-states-q1-2026/",date:"Apr 2, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"GM continues to position Chevrolet as the value leader, citing a portfolio of six Chevy and Buick vehicles at approximately $30,000 or under — increasingly resonant as average transaction prices hover near $50,000 industrywide.",source:"Tribune Chronicle",url:"https://www.tribtoday.com/news/business/2026/04/gm-leads-nation-in-1st-quarter-auto-sales/",date:"Apr 3, 2026"},
-{type:"opp",text:"The new Chevrolet Bolt EV is now in early delivery with strong initial momentum, giving Chevrolet a reinvigorated entry-EV story in a market where affordable EVs are increasingly scarce amid tariff pressures.",source:"GM Authority",url:"https://gmauthority.com/blog/2026/04/gm-sales-figures-numbers-results-united-states-q1-2026/",date:"Apr 2, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"GM-wide Q1 decline (-9.6%) and Chevy-specific drop (-7.9%) are partially a hangover from the extraordinary pre-tariff surge in Q1 2025. Spring selling season recovery is expected but affordability and rate headwinds persist.",source:"MoneyCheck",url:"https://moneycheck.com/ford-f-and-gm-q1-2026-sales-decline-what-the-numbers-really-mean/",date:"Apr 10, 2026"},
-{type:"opp",text:"Silverado LD growth (+8%) and Silverado/Sierra combined volume of 204,425 units signals truck segment resilience — a strong OEM advertising message for fleet and commercial buyers heading into Q2.",source:"GM Authority",url:"https://gmauthority.com/blog/2026/04/full-size-gm-truck-sales-numbers-figures-results-first-quarter-2026-q1/",date:"Apr 17, 2026"},
-{type:"opp",text:"Chevrolet maintains lean inventory levels (per Cox Automotive data), meaning any advertising investment should translate to faster turn and less need for deep discounting — a favorable ROI story for dealer co-op conversations.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]}
-]},
-
-{name:"Ford Motor Company",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Ford Q1 2026 U.S. sales fell 8.7% to 457,315 units. F-Series trucks declined 16% YoY due to the September 2025 Novelis aluminum plant fire constraining supply of high-margin trucks. EV deliveries crashed 70% to just 6,860 units.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"risk",text:"Ford requested temporary tariff relief on aluminum imports affected by the Novelis plant fire, but the Trump administration denied the request. Ford faces 50% tariffs on some aluminum imports, pressuring F-Series production costs.",source:"Ford Authority",url:"https://fordauthority.com/2026/04/trump-admin-denies-ford-tariff-relief-amid-f-series-production-woes/",date:"Apr 8, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Ford CEO Jim Farley cited BYD as the key global EV competitive threat — not Tesla — signaling a strategic pivot in Ford's EV messaging and product roadmap. Farley continues to argue for maintaining Chinese EV tariffs.",source:"Fortune",url:"https://fortune.com/2026/04/20/ford-ceo-jim-farley-china-byd-xiaomi-donald-trump-tariffs-automakers-gm-toyota-tesla-updated-vehicle-elon-musk/",date:"Apr 20, 2026"},
-{type:"opp",text:"Bronco Sport set a Q1 sales record of 35,021 units (+5%), with entry-level trims gaining 10%. Despite broader declines, the Bronco family is a genuine bright spot and strong advertising anchor heading into spring/summer.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[
-{type:"opp",text:"Ford's 'From America, For America' campaign (Wieden+Kennedy, Bryan Cranston voiceover) anchors Ford's U.S. manufacturing story as tariff pressures persist. Ford builds more than 80% of its U.S.-sold vehicles domestically — the highest share of any Detroit automaker.",source:"Adweek",url:"https://www.adweek.com/brand-marketing/ford-launches-discounts-for-american-buyers-as-trumps-auto-tariffs-take-hold",date:"Apr 3, 2025"}
-]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"F-Series inventory is expected to normalize in H2 as the Novelis aluminum supply recovers. Pent-up truck demand could create a burst of Q3 sales — watch for advertising investment uptick signaling dealer readiness.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"opp",text:"Ford is entering H2 2026 with a more focused, high-demand product mix: F-Series normalization, Explorer momentum, and Bronco family strength position the brand for recovery. Strong buying-signal moment for OEM advertising conversations.",source:"Tribune Chronicle",url:"https://www.tribtoday.com/news/business/2026/04/gm-leads-nation-in-1st-quarter-auto-sales/",date:"Apr 3, 2026"},
-{type:"risk",text:"A new iSeeCars study found Ford has issued more recalls than the rest of major auto industry combined over the past year, though 80% are now OTA software-fixable. Quality concerns may cloud consumer confidence messaging.",source:"Detroit News",url:"https://www.detroitnews.com/story/business/autos/ford/2026/04/21/ford-recalls-iseecars-karl-brauer-jim-farley-service-dealers/89716234007/",date:"Apr 21, 2026"}
-]}
-]},
-{name:"General Motors",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"GM Q1 2026 U.S. sales fell 9.7% to 626,429 units across all brands. However, GM retained its position as America's top-selling automaker, exceeding Toyota by more than 57,000 units. Fleet/Envolve sales grew 8% in Q1.",source:"Tribune Chronicle",url:"https://www.tribtoday.com/news/business/2026/04/gm-leads-nation-in-1st-quarter-auto-sales/",date:"Apr 3, 2026"},
-{type:"opp",text:"GM delivered 25,900 EVs in Q1 2026, maintaining its position as America's second-largest EV seller behind only Tesla. Bolt EV relaunch, Cadillac EV growth (+20%), and commercial van momentum all contributed.",source:"MoneyCheck",url:"https://moneycheck.com/ford-f-and-gm-q1-2026-sales-decline-what-the-numbers-really-mean/",date:"Apr 10, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"GM's full-size truck dominance continued in Q1 with combined Silverado/Sierra sales of 204,425 units — a 40% segment share. GM is increasing Silverado HD and Sierra HD production in response to Ford's announced F-Series volume increases.",source:"GM Authority",url:"https://gmauthority.com/blog/2026/04/full-size-gm-truck-sales-numbers-figures-results-first-quarter-2026-q1/",date:"Apr 17, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"GM holds its #1 U.S. sales position despite industry-wide contraction, with GMC posting its best-ever Q1 retail share — a strong data point for OEM partnerships emphasizing market leadership.",source:"GM Authority",url:"https://gmauthority.com/blog/2026/04/gm-sales-figures-numbers-results-united-states-q1-2026/",date:"Apr 2, 2026"},
-{type:"risk",text:"Ford and GM face a strategic dilemma as sedan demand may be recovering while both brands have dramatically reduced their car lineups. Any consumer shift back toward sedans would require significant product and advertising pivots.",source:"Motley Fool",url:"https://www.fool.com/investing/2026/04/23/ford-gm-face-massive-dilemma-trend-shift/",date:"Apr 23, 2026"},
-{type:"opp",text:"The Supreme Court ruling on tariff refunds (~$20B to be refunded from April 20 onward) could meaningfully reduce GM's tariff burden and improve margins in H2 2026 — a financial tailwind to watch closely.",source:"Digital Dealer",url:"https://digitaldealer.com/news/us-tariff-tracker-impact-automaker-response/164521/",date:"Apr 16, 2026"}
-]}
-]},
-
-{name:"Genesis",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Genesis continued its growth streak in Q1 2026 with 18,317 U.S. deliveries, up 4.6% YoY — one of the few luxury brands posting gains in a contracting market. March alone saw GV70 deliveries surge 32%, marking the brand's 19th consecutive month of growth.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"risk",text:"Genesis Q1 2026 inventory levels are among the highest in the industry (alongside Lincoln and VW), suggesting softer retail turn rates that may require increased incentive or advertising spend to normalize.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Genesis is a consistent growth story in a declining market — the brand's 19-month win streak and GV70/GV80 momentum make it one of the most advertisable luxury brands for OEM partnerships. The contrast with Audi (-30%) and Cadillac (-26%) is stark.",source:"AutoEvolution",url:"https://www.autoevolution.com/news/q1-us-auto-sales-2026-bmw-leads-the-premium-pack-mercedes-benz-inches-closer-to-lexus-audi-s-awol-268473.html",date:"Apr 14, 2026"},
-{type:"opp",text:"Hyundai Motor Group is ramping U.S. production at its Georgia plant to reduce tariff exposure — which could keep Genesis pricing competitive vs. German imports passing tariff costs to buyers.",source:"Bloomberg",url:"https://www.bloomberg.com/news/articles/2026-04-20/hyundai-accelerates-us-output-to-lighten-profit-hit-from-tariffs",date:"Apr 20, 2026"},
-{type:"risk",text:"Elevated dealer inventory warrants attention; if incentive spending escalates, Genesis's premium positioning could be undermined. Monitor Q2 transaction prices and days-supply metrics.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]}
-]},
-{name:"Honda",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Honda Q1 2026 U.S. deliveries were 304,478 units, down 5.1% YoY. A major highlight: Honda hybrid models set a new Q1 record at 95,882 units. CR-V and Accord hybrids together accounted for more than 55% of their respective model sales mixes.",source:"Honda Newsroom",url:"https://hondanews.com/en-US/releases/release-c3c2ba01a86f9156d20bab9fef003982-american-honda-posts-strong-march-and-q1-auto-sales-results",date:"Apr 1, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"The Honda CR-V reclaimed the #1 SUV spot in Q1 2026, outselling the Toyota RAV4 (constrained by its generation changeover). The 2026 CR-V refresh added a new TrailSport Hybrid trim. CR-V is America's best-selling CUV for 28 consecutive years.",source:"Carscoops",url:"https://www.carscoops.com/2026/04/honda-q1-2026-sales/",date:"Apr 2, 2026"},
-{type:"opp",text:"Honda Accord Q1 sales rose 21.9% YoY to 37,317 units, with hybrid variants accounting for more than 50% of the mix — one of the strongest hybrid demand stories in the industry.",source:"Carscoops",url:"https://www.carscoops.com/2026/04/honda-q1-2026-sales/",date:"Apr 2, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[
-{type:"opp",text:"Honda is running its Spring Sales Event through April 30, offering up to $1,250 cash back on the 2026 CR-V plus low-interest financing — signaling an active retail push into peak spring selling season.",source:"Cars.com",url:"https://www.cars.com/articles/honda-cr-v-deals-523810/",date:"Apr 2026"}
-]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Honda's hybrid surge (Q1 record of 95,882 units) is the brand's strongest current OEM advertising story, especially as gas prices rise and EV demand softens. Hybrid messaging tied to CR-V and Accord is a strong creative brief.",source:"Honda Newsroom",url:"https://hondanews.com/en-US/releases/release-c3c2ba01a86f9156d20bab9fef003982-american-honda-posts-strong-march-and-q1-auto-sales-results",date:"Apr 1, 2026"},
-{type:"opp",text:"CR-V reclaiming the #1 SUV position from RAV4 is a rare and newsworthy event — a strong hook for OEM digital advertising aimed at in-market compact SUV shoppers.",source:"Carscoops",url:"https://www.carscoops.com/2026/04/honda-q1-2026-sales/",date:"Apr 2, 2026"},
-{type:"risk",text:"Honda's overall volume is down 5.1%, and lean inventory may create allocation challenges at high-demand dealers. Manage OEM campaign reach carefully against available supply.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]}
-]},
-
-{name:"Hyundai",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Hyundai Q1 2026 U.S. deliveries reached 205,388 units, up 0.9% YoY — one of the few mainstream brands posting growth in a -7.5% industry. Record hybrid deliveries in March drove outperformance.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"risk",text:"Hyundai and Kia are expected to report lackluster Q1 financial earnings (releasing Apr 24) due to U.S. tariff impacts and a weaker Korean won increasing warranty provision costs. Operating profit forecast to decline ~23% YoY despite solid vehicle sales.",source:"Korea Herald",url:"https://www.koreaherald.com/article/10722870",date:"Apr 22, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Hyundai CEO José Muñoz announced on April 20 the company is accelerating U.S. production ramp-up at its Georgia plant to reduce tariff exposure. The Georgia plant expansion positions Hyundai to offer more domestically-built vehicles.",source:"Bloomberg",url:"https://www.bloomberg.com/news/articles/2026-04-20/hyundai-accelerates-us-output-to-lighten-profit-hit-from-tariffs",date:"Apr 20, 2026"},
-{type:"risk",text:"Hyundai and Kia trimmed their EV lineups in response to tariffs and slowing EV demand — the Ioniq 6 has been pared to a single U.S. model variant. The brands are leaning into hybrid as the bridge strategy.",source:"Automotive News",url:"https://www.autonews.com/hyundai/hyundai-kia-pare-evs-0305/",date:"Mar 5, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Hyundai's record hybrid demand is its strongest current OEM advertising story. In a market sensitive to rising gas prices, Hyundai's deep hybrid lineup (Tucson, Elantra, Santa Fe, Sonata) is a clear competitive differentiator.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"risk",text:"Financial headwinds from tariffs and the weak won mean Hyundai will likely be cost-conscious on discretionary ad spending in H1 2026. Frame pitches around measurable outcomes and ROI.",source:"Korea Herald",url:"https://www.koreaherald.com/article/10722870",date:"Apr 22, 2026"},
-{type:"opp",text:"Hyundai's Q1 U.S. record performance in its 40th year in the U.S. is a milestone worth noting in sales conversations — reinforces brand credibility and longevity for OEM partnership pitches.",source:"Best Selling Cars Blog",url:"https://bestsellingcarsblog.com/2026/04/usa-march-q1-2026-march-sales-down-14-ram-20-1-back-in-shape-hyundai-kia-hit-records/",date:"Apr 20, 2026"}
-]}
-]},
-{name:"Infiniti",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"neutral",text:"Infiniti Q1 2026 U.S. sales declined 3.2% to 12,750 units — a modest drop relative to other luxury brands. Infiniti maintains lean inventory levels among the tightest in the industry."}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Infiniti started production of the all-new 2027 QX65 coupe-SUV at Nissan's Smyrna, Tennessee plant this week — the brand's first new model since 2021. Starting at $53,990, the QX65 targets the BMW X6 and Genesis GV80 Coupe, arriving at dealers in summer 2026. U.S.-built production shields it from the 25% import tariff.",source:"Autoblog",url:"https://www.autoblog.com/news/infiniti-starts-qx65-coupe-suv-production-to-take-on-lexus-rx-and-bmw-x6",date:"Apr 18, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"The QX65 launch is the biggest Infiniti news in years. Production starting this week and summer dealer arrival creates an immediate OEM advertising campaign opportunity — conquest messaging vs. BMW X6, Genesis GV80 Coupe, and Audi Q8 is clear.",source:"Automotive News",url:"https://www.autonews.com/nissan/an-infiniti-launches-qx65-0326/",date:"Mar 26, 2026"},
-{type:"opp",text:"Infiniti's Smyrna, TN domestic production gives the QX65 a compelling tariff-shield story vs. European-imported rivals. This is an actionable talking point for dealers and OEM ad creative.",source:"Autoblog",url:"https://www.autoblog.com/news/infiniti-starts-qx65-coupe-suv-production-to-take-on-lexus-rx-and-bmw-x6",date:"Apr 18, 2026"},
-{type:"risk",text:"Infiniti's overall U.S. brand remains under pressure with a shrinking lineup and an aging QX50/QX60 core. The QX65 alone is unlikely to transform brand volume — watch Q3 delivery ramp as the true leading indicator.",source:"Automotive News",url:"https://www.autonews.com/nissan/an-infiniti-launches-qx65-0326/",date:"Mar 26, 2026"}
-]}
-]},
-
-{name:"Jaguar",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Jaguar Q1 2026 U.S. sales totaled approximately 900 units, down 67.9% YoY. This is expected: Jaguar halted production of its legacy ICE lineup while transitioning to an all-electric brand, and cannot sell cars it doesn't build.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Jaguar confirmed the production reveal of its first all-electric four-door GT (inspired by the Type 00 concept) will happen in September 2026. Customer order books open in H2 2026 with first deliveries approximately 12 months later. Expected pricing above $130,000+, competing with the Porsche Taycan.",source:"Carwow",url:"https://www.carwow.co.uk/jaguar/news/10514/jaguar-electric-four-door-gt-coming-september",date:"Apr 2026"},
-{type:"opp",text:"Media who have had prototype drives report the new electric Jaguar GT is 'really special' and dramatically styled. The September reveal is expected to generate significant earned media coverage.",source:"Electrifying",url:"https://www.electrifying.com/reviews/jaguar-reviews/electric-jaguar-type-00/review",date:"Apr 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"Jaguar is essentially in a zero-revenue, zero-volume holding pattern in the U.S. until the new EV arrives. No actionable near-term OEM advertising opportunity exists.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"opp",text:"The September 2026 reveal is a major media moment. OEM advertising partners should begin planning a launch support strategy now for Q4 2026 and 2027 — this is a rare full brand relaunch opportunity.",source:"Carwow",url:"https://www.carwow.co.uk/jaguar/news/10514/jaguar-electric-four-door-gt-coming-september",date:"Apr 2026"}
-]}
-]},
-{name:"Kia",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Kia achieved its highest-ever Q1 U.S. sales of 207,015 units in Q1 2026, up 4.1% YoY — defying an industry-wide -7.5% contraction and marking six consecutive quarters of U.S. sales growth. Four models set Q1 records: Sportage, Telluride, K5, and EV9.",source:"Autoblog",url:"https://www.autoblog.com/news/kia-record-q1-sales-2026",date:"Apr 2, 2026"},
-{type:"risk",text:"Kia's parent Hyundai Motor Group faces lackluster Q1 financial earnings (releasing Apr 24) due to tariff costs and weak Korean won. Despite record sales, profitability is being squeezed.",source:"Korea Herald",url:"https://www.koreaherald.com/article/10722870",date:"Apr 22, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Kia's hybrid sales surged 73% in Q1 and total electrified vehicle sales rose 30%, making Kia one of the strongest hybrid growth stories in the industry. Telluride hybrid demand surged 69% in February.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Kia's record Q1 and six-quarter growth streak make it one of the most compelling OEM partnership conversations. Sales reps should lead with the growth narrative and hybrid momentum as creative brief anchors.",source:"Autoblog",url:"https://www.autoblog.com/news/kia-record-q1-sales-2026",date:"Apr 2, 2026"},
-{type:"opp",text:"Kia is slightly outselling Hyundai in the U.S. YTD — a notable milestone that reinforces Kia's brand standing and justifies a more premium advertising approach.",source:"Best Selling Cars Blog",url:"https://bestsellingcarsblog.com/2026/04/usa-march-q1-2026-march-sales-down-14-ram-20-1-back-in-shape-hyundai-kia-hit-records/",date:"Apr 20, 2026"},
-{type:"risk",text:"Tariff costs are eating into Kia's profitability despite strong volume. Expect the brand to be disciplined on ad spending and ROI-focused in H1. Frame any pitch around measurable outcomes.",source:"Korea Herald",url:"https://www.koreaherald.com/article/10722870",date:"Apr 22, 2026"}
-]}
-]},
-
-{name:"Land Rover",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Land Rover Q1 2026 U.S. sales were approximately 2,300 units, down 27% YoY — deeply impacted by the brand halting U.S. deliveries during the 25% tariff implementation. JLR exports ~100,000 vehicles annually to the U.S., representing ~25% of global sales.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Land Rover is running April 2026 incentives on the Range Rover Evoque and Velar (4.9% APR + $2,000 loyalty cash), suggesting inventory is moving but demand recovery is still fragile post-tariff disruption.",source:"CarsDirect",url:"https://www.carsdirect.com/deals-articles/2026-land-rovers-already-have-deals",date:"Apr 2025"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"Land Rover's U.S. volume is severely constrained by its UK manufacturing base and the 25% import tariff. Advertising ROI is limited when supply is this restricted.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"risk",text:"Land Rover has among the highest dealer inventory days in the industry. This may create pressure to increase advertising to move existing units.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]}
-]},
-{name:"Lexus",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Lexus Q1 2026 U.S. sales were 80,952 units, down just 2.5% YoY — one of the best performances among luxury brands. Lexus maintains lean inventory levels among the tightest in the industry and holds its position as the #2 luxury brand behind BMW.",source:"AutoEvolution",url:"https://www.autoevolution.com/news/q1-us-auto-sales-2026-bmw-leads-the-premium-pack-mercedes-benz-inches-closer-to-lexus-audi-s-awol-268473.html",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Lexus is reportedly exploring a hybrid version of the GX SUV, extending Toyota's proven electrification strategy into the lineup's off-road-capable segment — another hybrid portfolio expansion.",source:"CarsDirect",url:"https://www.carsdirect.com/automotive-news",date:"Apr 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Lexus's resilient Q1 performance (-2.5% vs. industry -7.5%) and tight inventory make it one of the most attractive luxury OEM advertising partners. Strong brand momentum, minimal tariff exposure, and hybrid leadership are all compelling pitch points.",source:"AutoEvolution",url:"https://www.autoevolution.com/news/q1-us-auto-sales-2026-bmw-leads-the-premium-pack-mercedes-benz-inches-closer-to-lexus-audi-s-awol-268473.html",date:"Apr 14, 2026"},
-{type:"opp",text:"Lexus leads its competitive set in inventory efficiency; ads convert to sales faster when inventory is lean — a strong ROI story for digital advertising investments.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"neutral",text:"Mercedes-Benz (78,500 units) is narrowing the gap with Lexus (80,952) in the premium luxury brand race — the two brands are in a tight competition that will define advertiser perception through 2026."}
-]}
-]},
-{name:"Lincoln",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Lincoln Q1 2026 U.S. sales were 23,731 units, down just 0.5% YoY — among the most resilient Ford Motor Company brand results. Lincoln's relative stability is notable given Ford's overall Q1 was down 8.7%.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"risk",text:"Lincoln Corsair sales declined 14% in Q1, and the brand has elevated inventory levels among the highest in the industry, which may require incentive spending to normalize.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Reports indicate Lincoln is developing a body-on-frame, off-road-capable two-row SUV on the Bronco platform, expected in 2029–2030, to compete against the Mercedes-Benz G-Class, Range Rover, and Lexus LX — a significant strategic product expansion.",source:"CarsDirect",url:"https://www.carsdirect.com/automotive-news/is-lincoln-building-a-bronco-based-suv",date:"Feb 27, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Lincoln's near-flat Q1 in a deeply negative industry environment is an underreported bright spot. The brand benefits from U.S. manufacturing (Navigator/Aviator from Kentucky), giving it a tariff-shield story relative to German luxury.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"risk",text:"Elevated inventory on Corsair and Nautilus may pressure Lincoln to increase incentive advertising through Q2. Watch for deal announcements signaling budget re-allocation.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"opp",text:"The Bronco-based off-road SUV pipeline (2029–30) is a strong long-range storytelling opportunity positioning Lincoln against Lexus LX and Range Rover. Begin building that narrative now.",source:"CarsDirect",url:"https://www.carsdirect.com/automotive-news/is-lincoln-building-a-bronco-based-suv",date:"Feb 27, 2026"}
-]}
-]},
-
-{name:"Mazda",status:"risk",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Mazda Q1 2026 U.S. sales fell 14.4% to 94,473 units — the brand's eighth consecutive month of decline. March was particularly weak, down 26%, driven by weakness in light-truck/SUV models.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[{type:"neutral",text:"The upcoming 2026 Mazda CX-5 refresh continues to be anticipated as a key product catalyst; no specific launch timing confirmed this week."}]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"Eight consecutive months of decline signal a structural demand problem, not just tariff noise. Mazda's advertising investment should be carefully evaluated; focus pitches on the CX-5 and CX-50 as the volume anchors.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"risk",text:"Mazda's light-truck weakness is especially concerning given that SUVs represent the overwhelming majority of U.S. volume. If CX-5/CX-50 declines aren't arrested, overall brand trajectory will remain negative through mid-2026.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]}
-]},
-{name:"Mercedes-Benz",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Mercedes-Benz Q1 2026 U.S. sales were 78,500 units (passenger cars ~70K), down 3.6% YoY — a relatively strong result for a brand with significant European import exposure. Mercedes benefits from its Tuscaloosa, AL plant producing GLE, GLS, and EQS SUV.",source:"AutoEvolution",url:"https://www.autoevolution.com/news/q1-us-auto-sales-2026-bmw-leads-the-premium-pack-mercedes-benz-inches-closer-to-lexus-audi-s-awol-268473.html",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"A new Mercedes-AMG EV is being designed specifically to 'not feel like an EV' — emphasizing performance DNA and driving dynamics over efficiency. This positions AMG EV product distinctly against Tesla and other luxury EVs.",source:"CarsDirect",url:"https://www.carsdirect.com/automotive-news",date:"Apr 2026"},
-{type:"opp",text:"A new study found Mercedes-Benz dominates the least-recalled vehicles list, holding 9 of the top 10 positions — a powerful quality story for brand advertising and OEM conversations.",source:"Detroit News",url:"https://www.detroitnews.com/story/business/autos/ford/2026/04/21/ford-recalls-iseecars-karl-brauer-jim-farley-service-dealers/89716234007/",date:"Apr 21, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Mercedes-Benz is inching closer to Lexus in the premium brand race (78,500 vs. 80,952 in Q1) — this competitive narrative can be used in sales conversations to highlight Mercedes's growing U.S. relevance.",source:"AutoEvolution",url:"https://www.autoevolution.com/news/q1-us-auto-sales-2026-bmw-leads-the-premium-pack-mercedes-benz-inches-closer-to-lexus-audi-s-awol-268473.html",date:"Apr 14, 2026"},
-{type:"opp",text:"Mercedes's industry-leading quality/recall record is a differentiated brand asset translating directly to CPO advertising value and used-vehicle marketing opportunities.",source:"Detroit News",url:"https://www.detroitnews.com/story/business/autos/ford/2026/04/21/ford-recalls-iseecars-karl-brauer-jim-farley-service-dealers/89716234007/",date:"Apr 21, 2026"},
-{type:"risk",text:"German-made Mercedes models face the same 15% import tariff as BMW, with potential for further price increases. Alabama production significantly buffers GLE/GLS from the worst tariff exposure.",source:"Digital Dealer",url:"https://digitaldealer.com/news/us-tariff-tracker-impact-automaker-response/164521/",date:"Apr 16, 2026"}
-]}
-]},
-{name:"MINI",status:"risk",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"MINI Q1 2026 U.S. sales declined 10.2% to 6,261 units, reflecting the brand's ongoing model transition to fully electric and plug-in hybrid powertrains — a generational changeover with the electric Cooper and Aceman central to the lineup.",source:"BMW Pressroom",url:"https://www.press.bmwgroup.com/usa/article/detail/T0456837EN_US?language=en_US",date:"Apr 1, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"MINI holds some of the highest dealer inventory days in the industry and volume declines persist through its EV transition. The brand faces a challenging 'neither ICE nor EV' positioning phase.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"neutral",text:"The electric Cooper and Aceman are MINI's best current storytelling vehicles. Urban EV mobility positioning remains differentiated in a crowded market, though European import tariffs are a pricing headwind."}
-]}
-]},
-
-{name:"Mitsubishi",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Mitsubishi Q1 2026 U.S. sales declined 15% to 26,881 units — one of the sharper declines among mainstream brands.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"The updated 2026 Mitsubishi Outlander PHEV received a mid-cycle refresh including redesigned hood, new front grille, updated bumpers, significant interior overhaul, and a new top-tier Black Edition trim. The PHEV carries Mitsubishi's 20+ year plug-in hybrid expertise.",source:"The Truth About Cars",url:"https://www.thetruthaboutcars.com/cars/news-blog/mitsubishi-raises-price-for-improved-outlander-phev-for-2026-45134431",date:"Mar 18, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"Mitsubishi's Q1 decline (-15%) continues a soft trend. With a limited lineup and few new model catalysts, advertising investment should be concentrated on the Outlander PHEV and its plug-in value story.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"opp",text:"Mitsubishi's Outlander PHEV is among the most affordable PHEVs in the U.S. market. As gas prices rise and consumers seek electrified options without EV range anxiety, the PHEV value story becomes more compelling.",source:"The Truth About Cars",url:"https://www.thetruthaboutcars.com/cars/news-blog/mitsubishi-raises-price-for-improved-outlander-phev-for-2026-45134431",date:"Mar 18, 2026"}
-]}
-]},
-{name:"Nissan",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Nissan Q1 2026 U.S. sales fell 7.7% to 234,318 units. The Rogue and Pathfinder remain core volume drivers but face pricing pressure from Mexico-built tariffs that add $2,500–$3,000 per vehicle in additional cost.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Nissan CEO Ivan Espinosa stated this week that cheaper versions of the Kicks and Sentra are 'ready to go' if U.S. tariff policies change — signaling product solutions waiting on trade policy clarity. Entry-level models are priced out of the sub-$20K segment due to Mexico tariff costs.",source:"Edmunds",url:"https://www.edmunds.com/car-news/nissan-kicks-sentra-cheaper-tariffs.html",date:"Apr 14, 2026"},
-{type:"opp",text:"Nissan unveiled the all-new fourth-generation 2027 Rogue at a global media event — a major product refresh for its #1 U.S. volume driver — with a new long-term vision 'Mobility Intelligence for Everyday Life.'",source:"Car Guide",url:"https://www.guideautoweb.com/en/articles/81607/2026-mitsubishi-outlander-hardly-an-improvement/",date:"Apr 13, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"Nissan's Mexico production exposure ($2,500–$3,000 tariff cost per entry-level vehicle) is squeezing its most price-sensitive models. Without tariff relief, Nissan risks losing affordable-vehicle buyers to Korean and domestic alternatives.",source:"CBT News",url:"https://www.cbtnews.com/nissan-urges-washington-for-tariff-relief/",date:"Apr 2026"},
-{type:"opp",text:"The all-new 2027 Rogue reveal is a significant product moment — Nissan's #1 U.S. seller getting a new generation typically generates strong pull-through advertising opportunities. Flag this as a Q4 2026/Q1 2027 campaign moment.",source:"Car Guide",url:"https://www.guideautoweb.com/en/articles/81607/2026-mitsubishi-outlander-hardly-an-improvement/",date:"Apr 13, 2026"},
-{type:"opp",text:"Nissan is maximizing production at its Smyrna, TN plant and shifting volume away from Mexico and Japan to reduce tariff exposure — a strategic move that could stabilize Rogue and Pathfinder pricing by late 2026.",source:"Mexico Business News",url:"https://mexicobusiness.news/automotive/news/nissan-seeks-support-offset-usmca-tariffs-mexico",date:"Apr 15, 2026"}
-]}
-]},
-{name:"Polestar",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Polestar posted a $2.36 billion net loss for full-year 2025, though it crossed into adjusted gross profitability in Q4. CEO Lohscheller reaffirmed a slower 2026 sales trajectory amid 'challenging' geopolitical conditions.",source:"EV Magazine",url:"https://eletric-vehicles.com/geely/polestar/polestar-loss-widens-to-2-4-billion-in-2025-despite-q4-narrowing/",date:"Apr 17, 2026"},
-{type:"opp",text:"Polestar Q1 2026 global retail sales rose 7% to ~13,126 vehicles — a Q1 record — led by strong European markets (Germany +50%, UK +12%). U.S. Q1 sales were approximately 1,350 units, down ~18% YoY.",source:"EV Magazine",url:"https://eletric-vehicles.com/geely/polestar/polestars-global-sales-rise-7-in-q1-driven-by-europe-australia-and-south-korea/",date:"Apr 9, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Polestar announced a new second-generation Polestar 2 reveal for early 2027, and the 2026 Polestar 3 received significant powertrain upgrades. The Polestar 5 performance GT is also expected in 2026.",source:"InsideEVs",url:"https://insideevs.com/news/787583/polestar-2-new-generation-2027/",date:"Feb 18, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"Polestar's U.S. volume (-18% in Q1) and ongoing losses make it a financially fragile OEM advertising partner. Budget volatility should be expected; new campaign commitments should be structured with flexibility.",source:"EV Magazine",url:"https://eletric-vehicles.com/geely/polestar/polestar-loss-widens-to-2-4-billion-in-2025-despite-q4-narrowing/",date:"Apr 17, 2026"},
-{type:"opp",text:"Polestar's European momentum (record Q1 globally) suggests strong brand health in premium EV markets. For U.S.-focused conversations, the Polestar 3 update and upcoming Polestar 5 GT launch are the best near-term advertising hooks.",source:"InsideEVs",url:"https://insideevs.com/news/787583/polestar-2-new-generation-2027/",date:"Feb 18, 2026"}
-]}
-]},
-
-{name:"Porsche",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Porsche Q1 2026 U.S. sales were 16,517 units, down 12.5% YoY, reflecting luxury import market softness and tariff headwinds on European-manufactured vehicles.",source:"AutoEvolution",url:"https://www.autoevolution.com/news/q1-us-auto-sales-2026-bmw-leads-the-premium-pack-mercedes-benz-inches-closer-to-lexus-audi-s-awol-268473.html",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Automotive News published a first-drive review this week of the 2026 Porsche Cayenne Electric, praising it as 'classic Porsche.' Deliveries begin late summer 2026 starting at $109,000 (standard) and $163,000 (Turbo Electric — the most powerful Porsche ever at 1,139hp).",source:"Automotive News",url:"https://www.autonews.com/volkswagen/porsche/an-porsche-cayenne-electric-reviews-0421/",date:"Apr 21, 2026"},
-{type:"opp",text:"Porsche expanded the Cayenne Electric lineup this spring with the new Cayenne S Electric (536hp, 0-60 in 3.6s). All Cayenne Electric models feature NACS ports for Tesla Supercharger network access. Over 200,000 configurations have been started on porsche.com.",source:"Porsche Newsroom",url:"https://newsroom.porsche.com/en_US/2026/products/porsche-the-new-cayenne-s-electric-41867.html",date:"Mar 10, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"The Cayenne Electric launch in late summer 2026 is Porsche's biggest product moment of the year. With 200,000+ configurations already started, pre-launch consumer interest is very high — an excellent advertising investment moment.",source:"Porsche Newsroom",url:"https://newsroom.porsche.com/en_US/2025/products/porsche-cayenne-electric-is-one-of-newsweeks-most-anticipated-new-vehicles-for-2026.html",date:"Dec 2025"},
-{type:"risk",text:"Porsche's tariff exposure (European-built vehicles) and Q1 sales decline of 12.5% signal near-term headwinds. The Cayenne Electric's premium pricing ($109K–$163K+) insulates it from mass-market affordability pressures, but the conquest buyer window is narrow.",source:"AutoEvolution",url:"https://www.autoevolution.com/news/q1-us-auto-sales-2026-bmw-leads-the-premium-pack-mercedes-benz-inches-closer-to-lexus-audi-s-awol-268473.html",date:"Apr 14, 2026"},
-{type:"opp",text:"Porsche's April Macan EV lease at $1,049/month signals ongoing incentive activity. For OEM partners, this is a lease-support advertising opportunity ahead of the Cayenne Electric launch.",source:"Autoblog",url:"https://www.autoblog.com/carbuying/2026-porsche-macan-ev-lease-deals-april",date:"Apr 22, 2026"}
-]}
-]},
-{name:"Rivian",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Rivian Q1 2026 delivered 10,365 vehicles (all R1T/R1S/commercial vans), down 12.1% YoY as the brand prepares for the R2 ramp. Q1 production was 10,236 units.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Rivian officially started customer R2 production on April 22, 2026 at its Normal, Illinois plant — a pivotal milestone. CEO RJ Scaringe drove the first customer-ready R2 off the line despite a tornado damaging the facility days prior. Customer deliveries begin this spring, starting at $57,990 for the Performance Launch Edition.",source:"CNBC",url:"https://www.cnbc.com/2026/04/22/rivian-r2-ev.html",date:"Apr 22, 2026"},
-{type:"opp",text:"The R2 is positioned to compete with Tesla Model Y, with base pricing expected at $45,000 when the Standard variant arrives in 2027. BNP Paribas analysts project ~400 R2 deliveries in Q2, ramping to ~7,000 in Q3 and ~15,000 in Q4 2026.",source:"Electrek",url:"https://electrek.co/2026/04/22/rivian-r2-starts-production-tornado-deliveries-spring/",date:"Apr 22, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[
-{type:"opp",text:"Rivian launched a cross-country R2 tour kicking off in Venice, CA this week, with stops in Denver, Chicago, and Long Island — a grassroots marketing push generating retail excitement ahead of spring deliveries.",source:"Rivian Stories",url:"https://stories.rivian.com/r2-start-of-production-spring-delivery-2026",date:"Apr 22, 2026"}
-]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Rivian's R2 production start is the most newsworthy EV product moment of the week. For OEM advertising partners, this creates a unique opportunity to reach the early-majority EV buyer demographic that R2 targets — a younger, more mainstream audience than R1 buyers.",source:"CNBC",url:"https://www.cnbc.com/2026/04/22/rivian-r2-ev.html",date:"Apr 22, 2026"},
-{type:"opp",text:"Rivian sells direct-to-consumer without franchised dealers, but its cross-country tour creates pop-up awareness moments. Digital advertising alongside Rivian media coverage this week is a strong contextual opportunity.",source:"CBT News",url:"https://www.cbtnews.com/rivian-begins-r2-production/",date:"Apr 23, 2026"},
-{type:"risk",text:"The tornado damage to Rivian's Normal plant is an unknown variable. While Scaringe expressed confidence in no delays, supply chain and production ramp risks are real. Watch Q2 delivery reports for any disruption signs.",source:"TechCrunch",url:"https://techcrunch.com/2026/04/22/rivian-r2-production-has-started-despite-tornado-damage-to-factory/",date:"Apr 22, 2026"}
-]}
-]},
-
-{name:"Stellantis",status:"both",sections:[
-{title:"Leadership Changes",bullets:[
-{type:"opp",text:"Stellantis hired longtime Hyundai Motor executive Michael Orange this week for a senior U.S. sales leadership role under CEO Antonio Filosa, signaling continued investment in rebuilding the brand's North American retail organization.",source:"Detroit News",url:"https://www.detroitnews.com/story/business/autos/chrysler/2026/04/16/stellantis-set-to-hire-hyundai-executive-as-it-seeks-sales-turnaround/89630704007/",date:"Apr 16, 2026"}
-]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Stellantis reported Q1 2026 global shipments of 1.4 million units, up 12% YoY — driven by a 17% surge in North America (379,000 units) under CEO Filosa's turnaround strategy. Stellantis was one of the few major automakers posting U.S. growth in Q1.",source:"Yahoo Finance",url:"https://finance.yahoo.com/markets/stocks/article/jeep-ram-truck-maker-stellantis-rises-on-improving-q1-sales-132928200.html",date:"Apr 15, 2026"},
-{type:"risk",text:"Q1 2026 financial results due April 30. The company suspended its 2026 dividend following the catastrophic $26.3B net loss in 2025. Watch for margin guidance and updated 2026 outlook.",source:"Stellantis IR",url:"https://www.stellantis.com/en/news/press-releases/2026/april/stellantis-to-announce-first-quarter-2026-financial-results-on-april-30",date:"Apr 16, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Ram brand is the Q1 2026 standout performer industry-wide, with sales up 20.1% to 112,160 units — the only major truck brand posting meaningful growth. The return of V8 engine options to Ram 1500 is a key driver.",source:"Best Selling Cars Blog",url:"https://bestsellingcarsblog.com/2026/04/usa-march-q1-2026-march-sales-down-14-ram-20-1-back-in-shape-hyundai-kia-hit-records/",date:"Apr 20, 2026"},
-{type:"opp",text:"Stellantis Investor Day is May 21, 2026 in Detroit — Filosa will unveil a comprehensive new industrial plan with expanded hybrid options for Ram and Jeep. Hybrid Jeep Cherokee is already in market.",source:"TheStreet",url:"https://www.thestreet.com/automotive/new-stellantis-ceos-plan-seems-to-be-working-so-far",date:"Apr 15, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Stellantis is the clearest U.S. turnaround story in Q1 2026. Ram's 20% growth and Jeep's recovering momentum signal a brand family returning to relevance. The narrative momentum is building — strong OEM advertising conversation.",source:"Yahoo Finance",url:"https://finance.yahoo.com/markets/stocks/article/jeep-ram-truck-maker-stellantis-rises-on-improving-q1-sales-132928200.html",date:"Apr 15, 2026"},
-{type:"risk",text:"Stellantis set an internal goal of 25% U.S. retail sales growth in 2026 but has only delivered 4% so far in Q1. Execution risk remains high, and if incentive spending escalates to hit that target, margins and ad budget discipline could suffer.",source:"Detroit News",url:"https://www.detroitnews.com/story/business/autos/chrysler/2026/04/16/stellantis-set-to-hire-hyundai-executive-as-it-seeks-sales-turnaround/89630704007/",date:"Apr 16, 2026"},
-{type:"opp",text:"The May 21 Investor Day will be heavily covered — a good moment to be in the Stellantis media ecosystem. Pre-announcement coverage around hybrid Ram and Jeep is building.",source:"Stellantis IR",url:"https://www.stellantis.com/en/news/press-releases/2026/april/stellantis-to-announce-first-quarter-2026-financial-results-on-april-30",date:"Apr 16, 2026"}
-]}
-]},
-{name:"Subaru",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Subaru Q1 2026 U.S. sales fell 15% to 141,944 units — the brand's eighth consecutive month of decline. March alone was down 24%. Record Forester January deliveries were insufficient to offset broad weakness across Crosstrek and Outback.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Subaru is launching two new EVs in 2026: the Trailseeker (a three-row midsize SUV on the Toyota Highlander EV platform) and the Uncharted. The Trailseeker represents Subaru's first three-row model and could expand the brand's family buyer appeal.",source:"TopSpeed",url:"https://www.topspeed.com/future-cars/",date:"Mar 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"Eight consecutive months of decline is a significant red flag. Advertising investment should be evaluated carefully; deep discounting could damage Subaru's historically strong value retention.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"opp",text:"The Trailseeker three-row EV launch later in 2026 is Subaru's biggest product moment in years. Begin building a launch advertising strategy now — the three-row family EV segment is underserved and the Subaru AWD/outdoor brand gives it a differentiated angle.",source:"TopSpeed",url:"https://www.topspeed.com/future-cars/",date:"Mar 2026"}
-]}
-]},
-
-{name:"Tesla",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Tesla reported strong Q1 2026 earnings on April 22, beating expectations with $22.38B in revenue (up 16% YoY) and $0.41 non-GAAP EPS. Gross margin surged to 21.1% — the highest in several quarters. Free cash flow was $1.44 billion.",source:"Electrek",url:"https://electrek.co/2026/04/22/tesla-tsla-q1-2026-financial-results/",date:"Apr 22, 2026"},
-{type:"risk",text:"Tesla U.S. Q1 deliveries were approximately 110,000 vehicles, down 15.4% YoY, reflecting the Model S/X wind-down and transition toward Cybercab and next-gen platforms.",source:"Carscoops",url:"https://www.carscoops.com/2026/04/tesla-q1-2026-earnings/",date:"Apr 23, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Tesla's Q1 earnings call confirmed Cybercab and Tesla Semi volume production are on schedule for 2026. Tesla officially launched unsupervised Robotaxi service in Dallas and Houston in April — a major autonomy milestone. Musk stated long-term, the Roadster will be the only manually driven Tesla.",source:"NotATeslaApp",url:"https://www.notateslaapp.com/news/4031/everything-tesla-announced-during-its-q1-2026-earnings-call-summaryrecap",date:"Apr 23, 2026"},
-{type:"risk",text:"Tesla discontinued the Model S and Model X this week, marking the end of its original luxury sedan/SUV lineup as it pivots fully toward Cybercab, Model Y, and next-generation platforms.",source:"CarsDirect",url:"https://www.carsdirect.com/automotive-news",date:"Apr 14, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[
-{type:"opp",text:"Tesla's expanding Robotaxi service and Cybercab production ramp are generating massive earned media. Tesla still spends minimally on traditional advertising — brand awareness driven almost entirely by product news and Musk's social media presence.",source:"The Truth About Cars",url:"https://www.thetruthaboutcars.com/cars/news-blog/tesla-sees-q1-profits-jump-17-percent-excited-about-2026-45135103",date:"Apr 23, 2026"}
-]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Tesla's financial rebound (margins at 21.1%, revenue +16%) and the Cybercab/Robotaxi narrative make Tesla one of the most covered automotive brands globally this week. Competitive messaging from other EV brands needs to be sharp and differentiated.",source:"Carscoops",url:"https://www.carscoops.com/2026/04/tesla-q1-2026-earnings/",date:"Apr 23, 2026"},
-{type:"opp",text:"Tesla's U.S. Q1 volume decline (-15.4%) reflects the Model S/X wind-down and a transition period. This creates a brief window for luxury EV competitors (Cadillac, Genesis, Mercedes) to gain ground before Cybercab volume scales.",source:"Carscoops",url:"https://www.carscoops.com/2026/04/tesla-q1-2026-earnings/",date:"Apr 23, 2026"},
-{type:"opp",text:"Tesla's $25 billion 2026 capex plan signals massive investment in manufacturing, autonomy, and robotics — long-term, the widening gap between Tesla's AI/autonomy trajectory and traditional OEMs is the dominant industry narrative shaping consumer brand perception.",source:"NotATeslaApp",url:"https://www.notateslaapp.com/news/4031/everything-tesla-announced-during-its-q1-2026-earnings-call-summaryrecap",date:"Apr 23, 2026"}
-]}
-]},
-{name:"Toyota",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"opp",text:"Toyota Q1 2026 U.S. sales were 488,468 units (Toyota brand), essentially flat (+0.3% YoY) — the strongest performance among major volume brands in a contracting market. Toyota has the leanest dealer inventory of any mainstream brand.",source:"Tribune Chronicle",url:"https://www.tribtoday.com/news/business/2026/04/gm-leads-nation-in-1st-quarter-auto-sales/",date:"Apr 3, 2026"},
-{type:"risk",text:"Toyota faces the largest individual tariff exposure of any automaker globally, projecting ¥1.45 trillion ($9.1B) in tariff-related costs for its fiscal year ending March 2026. Despite this, Toyota has held its pricing and not announced increases.",source:"Digital Dealer",url:"https://digitaldealer.com/news/us-tariff-tracker-impact-automaker-response/164521/",date:"Apr 16, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"Toyota launched the all-new 6th-generation 2026 RAV4 as a hybrid-only lineup (no more gas-only RAV4) and kicked off a major 'What's Your RAV4?' marketing campaign on April 6. The new RAV4 starts at $33,350 and is available in HEV and PHEV only. The PHEV offers 52 miles of EV range.",source:"Toyota Newsroom",url:"https://pressroom.toyota.com/all-new-2026-toyota-rav4-takes-center-stage-in-whats-your-rav4-campaign/",date:"Apr 6, 2026"},
-{type:"opp",text:"The Toyota Camry led U.S. passenger car sales in Q1 with strong gains (+11.3% in March), becoming Toyota's best-seller over a quarter for the first time since 2017 — a signal that affordability-minded sedan buyers are returning to market.",source:"Best Selling Cars Blog",url:"https://bestsellingcarsblog.com/2026/04/usa-march-q1-2026-march-sales-down-14-ram-20-1-back-in-shape-hyundai-kia-hit-records/",date:"Apr 20, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[
-{type:"opp",text:"Toyota's 'What's Your RAV4?' campaign launched April 6 with a fully integrated multicultural approach including Spanish-language creative by Conill. This is Toyota's largest new-model advertising push of the year, centered on the hybrid-only RAV4 launch.",source:"Toyota Newsroom",url:"https://pressroom.toyota.com/all-new-2026-toyota-rav4-takes-center-stage-in-whats-your-rav4-campaign/",date:"Apr 6, 2026"}
-]},
-{title:"Sales Signals",bullets:[
-{type:"opp",text:"Toyota's RAV4 hybrid-only conversion is the most significant mainstream product/strategy move of Q1 2026. As America's best-selling compact SUV goes 100% electrified, this is a major OEM advertising story — lean in on co-op and digital campaign opportunities.",source:"Weekly Driver",url:"https://theweeklydriver.com/2026/04/2026-toyota-rav4-hybrid-redesign-specs-pricing/",date:"Apr 2026"},
-{type:"opp",text:"The Camry's unexpected Q1 surge (+11.3%) and Toyota's flat-to-positive overall sales in a down market position the brand as the stability story of 2026. Toyota's domestic production in Kentucky, Indiana, and Texas buffers it from some import tariff impacts.",source:"Best Selling Cars Blog",url:"https://bestsellingcarsblog.com/2026/04/usa-march-q1-2026-march-sales-down-14-ram-20-1-back-in-shape-hyundai-kia-hit-records/",date:"Apr 20, 2026"},
-{type:"risk",text:"Toyota's $9.1B tariff hit remains the industry's largest single-brand exposure. While the company has held pricing so far, any future increases would ripple through America's #2 auto brand and create broad consumer sentiment challenges.",source:"Digital Dealer",url:"https://digitaldealer.com/news/us-tariff-tracker-impact-automaker-response/164521/",date:"Apr 16, 2026"}
-]}
-]},
-
-{name:"Volkswagen",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Volkswagen Q1 2026 U.S. sales fell 16.1% to 84,316 units — among the steeper declines for a mainstream brand, reflecting tariff exposure on German-built models and EV demand softness. VW and Audi combined dropped from 149,509 units in Q1 2025 to 120,206 units.",source:"Automotive News",url:"https://www.autonews.com/volkswagen/an-vw-audi-q1-sales-0413/",date:"Apr 13, 2026"},
-{type:"risk",text:"VW Group's operating profit dropped 53% in 2025 due to tariffs, Porsche product strategy costs, and broader market headwinds — making 2026 a critical recovery year for the German conglomerate.",source:"Motor1",url:"https://www.motor1.com/news/789708/volkswagen-group-products-2026-audi-vw-porsche/",date:"Mar 11, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"VW Group has 20+ new or updated models launching across its brands in 2026, including the ID. Polo electric, ID. Tiguan, Audi A2 electric, Porsche Cayenne Electric, and Audi RS5. VW is betting on product volume to recover sales.",source:"Motor1",url:"https://www.motor1.com/news/789708/volkswagen-group-products-2026-audi-vw-porsche/",date:"Mar 11, 2026"},
-{type:"risk",text:"VW CEO Blume stated any decision on a U.S. factory would only make sense paired with tariff relief from Washington — suggesting no near-term commitment to domestic U.S. production.",source:"Global Banking & Finance",url:"https://www.globalbankingandfinance.com/audi-forecasts-margin-rebound-2026-battles-tariffs/",date:"Mar 17, 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"VW's 16.1% U.S. volume decline and Audi's 30% collapse signal a VW Group-wide North American problem. No U.S. manufacturing, heavy dependence on German and Mexican production, and weak EV demand create a challenging advertising environment.",source:"Automotive News",url:"https://www.autonews.com/volkswagen/an-vw-audi-q1-sales-0413/",date:"Apr 13, 2026"},
-{type:"opp",text:"VW holds among the highest dealer inventory days in the industry, which may push the brand toward more aggressive retail advertising to clear stock. This creates near-term tactical advertising opportunities.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"risk",text:"VW Group's combined losses and the scale of product refresh required suggest marketing budgets will be under significant pressure through H1 2026. Expect conservative spending and ROI-heavy conversations.",source:"Motor1",url:"https://www.motor1.com/news/789708/volkswagen-group-products-2026-audi-vw-porsche/",date:"Mar 11, 2026"}
-]}
-]},
-{name:"Volvo",status:"both",sections:[
-{title:"Leadership Changes",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Financial Updates",bullets:[
-{type:"risk",text:"Volvo Q1 2026 U.S. sales fell 31.9% to 22,651 units — one of the steepest brand declines in the luxury segment. Most U.S.-bound Volvo vehicles are built in Europe, making the brand highly exposed to the 15% import tariff.",source:"CarPro",url:"https://www.carpro.com/blog/first-quarter-2026-u.s.-auto-sales-results-all-automakers-reporting",date:"Apr 14, 2026"},
-{type:"risk",text:"Volvo's global Q1 sales also declined 17%. However, fully electric models posted a 12% sales increase globally — a bright spot in an otherwise difficult quarter.",source:"InsideEVs",url:"https://insideevs.com/news/793811/volvo-ex60-production-schedule-2026/",date:"Apr 23, 2026"}
-]},
-{title:"Competitive Moves & Partnerships",bullets:[
-{type:"opp",text:"The all-electric Volvo EX60 (XC60 successor) has generated extraordinary demand since its January 2026 reveal — over 3,000 orders in Sweden in the first month, outpacing even the EX30 launch. Volvo is increasing 2026 production volumes. U.S. order books open later this spring.",source:"Volvo Cars Media",url:"https://www.volvocars.com/intl/media/press-releases/44CDFC8814BA3CE7/",date:"Mar 4, 2026"},
-{type:"opp",text:"The EX60 offers up to 400 miles of range (longest of any Volvo EV), charges 10–80% in under 20 minutes, and is Volvo's first model with a structural battery pack. U.S. pricing expected ~$55,000–$75,000. U.S. deliveries begin summer 2026.",source:"Consumer Reports",url:"https://www.consumerreports.org/cars/hybrids-evs/2027-volvo-ex60-review-a1077293479/",date:"Jan 2026"}
-]},
-{title:"Digital Advertising & Publisher Activity",bullets:[{type:"neutral",text:"No notable updates this week."}]},
-{title:"Sales Signals",bullets:[
-{type:"risk",text:"Volvo's Q1 U.S. volume decline (-31.9%) is severe and almost entirely driven by tariff exposure on its European-built lineup. Until the XC60 PHEV begins U.S. production (expected end of 2026 in South Carolina), Volvo remains highly vulnerable.",source:"Salem Radio Network",url:"https://srnnews.com/stellantis-volvo-cars-shares-rise-as-us-sales-defy-tariff-fears",date:"Nov 2025"},
-{type:"opp",text:"The EX60 is one of the most anticipated EVs of 2026 globally. With U.S. order books opening this spring and deliveries in summer, this is Volvo's best near-term advertising story. The 400-mile range leadership vs. competitors is a compelling creative brief.",source:"InsideEVs",url:"https://insideevs.com/news/793811/volvo-ex60-production-schedule-2026/",date:"Apr 23, 2026"},
-{type:"opp",text:"Volvo's CEO stated the U.S. market is 'perfect' for EVs — signaling confidence in long-term U.S. EV demand. The EX60 launch campaign will likely be one of the more substantial OEM EV launches of H2 2026.",source:"InsideEVs",url:"https://insideevs.com/news/793811/volvo-ex60-production-schedule-2026/",date:"Apr 23, 2026"}
-]}
-]}
-]; // end OEMS array
-
-// ─── UI LOGIC ───────────────────────────────────────────────
-const navList = document.getElementById('nav-list');
-const oemGrid = document.getElementById('oem-grid');
-const detailView = document.getElementById('detail-view');
-const snapshotView = document.getElementById('snapshot-view');
-const detailTitle = document.getElementById('detail-title');
-const detailBody = document.getElementById('detail-body');
-const searchInput = document.getElementById('search-input');
-let currentOEM = null;
-
-function statusEmoji(s){
-  if(s==='both') return '🔴🟢';
-  if(s==='risk') return '🔴';
-  if(s==='opp') return '🟢';
-  return '⚪';
+function getStatusDot(s){return s==="both"||s==="risk"?"\uD83D\uDD34":s==="opportunity"?"\uD83D\uDFE2":"\u26AA"}
+function buildSidebar(){
+  const list=document.getElementById("oem-list");
+  Object.keys(OEM_DATA).forEach(name=>{
+    const item=document.createElement("div");
+    item.className="oem-nav-item";item.dataset.oem=name;
+    item.innerHTML=`<span>${name}</span><span class="oem-nav-badge">${getStatusDot(OEM_DATA[name].status)}</span>`;
+    item.onclick=()=>showOEM(name);list.appendChild(item);
+  });
 }
-function statusDot(s){
-  if(s==='both') return '<span style="font-size:11px">🔴🟢</span>';
-  if(s==='risk') return '<span style="font-size:11px">🔴</span>';
-  if(s==='opp') return '<span style="font-size:11px">🟢</span>';
-  return '<span style="font-size:11px">⚪</span>';
+function buildSnapshot(){
+  const og=document.getElementById("top3-opps");
+  TOP3_OPPS.forEach((item,i)=>{
+    const c=document.createElement("div");c.className="top3-card opp";
+    c.innerHTML=`<div class="top3-num green">${i+1}</div><div class="top3-oem green">${item.oem}</div><div class="top3-text">${item.text}</div><a class="top3-src" href="${item.url}" target="_blank">[${item.src}]</a>`;
+    og.appendChild(c);
+  });
+  const rg=document.getElementById("top3-risks");
+  TOP3_RISKS.forEach((item,i)=>{
+    const c=document.createElement("div");c.className="top3-card risk";
+    c.innerHTML=`<div class="top3-num red">${i+1}</div><div class="top3-oem red">${item.oem}</div><div class="top3-text">${item.text}</div><a class="top3-src" href="${item.url}" target="_blank">[${item.src}]</a>`;
+    rg.appendChild(c);
+  });
+  const tg=document.getElementById("trends-grid");
+  TRENDS.forEach(t=>{
+    const c=document.createElement("div");c.className="trend-card";
+    c.innerHTML=`<div class="trend-tag">${t.tag}</div><div class="trend-text">${t.text}</div><div class="trend-oems">OEMs: ${t.oems}</div>`;
+    tg.appendChild(c);
+  });
+  const grid=document.getElementById("oem-grid");
+  Object.keys(OEM_DATA).forEach(name=>{
+    const c=document.createElement("div");c.className="grid-card";
+    c.innerHTML=`<span class="grid-card-name">${name}</span><span class="grid-card-badge">${getStatusDot(OEM_DATA[name].status)}</span>`;
+    c.onclick=()=>showOEM(name);grid.appendChild(c);
+  });
 }
-
+const SECTION_ICONS={"Leadership Changes":"\uD83D\uDC64","Financial Updates":"\uD83D\uDCB0","Competitive Moves & Partnerships":"\uD83E\uDD1D","Digital Advertising & Publisher Activity":"\uD83D\uDCF2","Sales Signals":"\uD83D\uDCAC"};
 function buildBullet(b){
-  let cls = 'bullet-item';
-  if(b.type==='risk') cls+=' risk';
-  else if(b.type==='opp') cls+=' opp';
-  else if(b.type==='neutral') cls+=' muted';
-  let inner = escHtml(b.text);
-  if(b.source && b.url){
-    inner += ` <span class="bullet-source"><a href="${b.url}" target="_blank" rel="noopener">[${escHtml(b.source)}]</a></span>`;
-  }
-  if(b.date){
-    inner += ` <span class="bullet-date">(Published: ${escHtml(b.date)})</span>`;
-  }
-  return `<div class="${cls}">${inner}</div>`;
+  let cls="bullet neutral",prefix="",prefixCls="";
+  if(b.type==="risk"){cls="bullet risk";prefix="\u26A0\uFE0F Risk";prefixCls="risk-prefix"}
+  else if(b.type==="opportunity"){cls="bullet opportunity";prefix="\u2705 Opportunity";prefixCls="opp-prefix"}
+  const prefixHtml=prefix?`<span class="bullet-prefix ${prefixCls}">${prefix}</span>`:"";
+  const srcHtml=b.source?`<span class="bullet-meta"><a href="${b.source.url}" target="_blank">[${b.source.label}]</a><span class="bullet-date">(Published: ${b.source.date})</span></span>`:"";
+  return `<div class="${cls}">${prefixHtml}<span class="bullet-text">${b.text}</span>${srcHtml}</div>`;
 }
-
-function escHtml(s){
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function buildSections(sections){
-  return sections.map(sec=>{
-    const bullets = sec.bullets.map(buildBullet).join('');
-    return `<div class="section-card">
-      <div class="section-card-header" onclick="toggleSection(this)">
-        <h3>${escHtml(sec.title)}</h3>
-        <span class="section-toggle">▼</span>
-      </div>
-      <div class="section-card-body">${bullets}</div>
-    </div>`;
-  }).join('');
-}
-
-function toggleSection(header){
-  header.closest('.section-card').classList.toggle('collapsed');
-}
-
 function showOEM(name){
-  const oem = OEMS.find(o=>o.name===name);
-  if(!oem) return;
-  currentOEM = name;
-  snapshotView.style.display='none';
-  detailView.style.display='block';
-  detailTitle.textContent = oem.name;
-  detailBody.innerHTML = buildSections(oem.sections);
-  document.querySelectorAll('.nav-item').forEach(el=>{
-    el.classList.toggle('active', el.dataset.name===name);
+  const data=OEM_DATA[name];
+  document.getElementById("snapshot-view").classList.remove("visible");
+  document.getElementById("oem-detail").classList.add("visible");
+  document.getElementById("snapshot-tab").classList.remove("active");
+  document.querySelectorAll(".oem-nav-item").forEach(el=>el.classList.toggle("active",el.dataset.oem===name));
+  document.getElementById("oem-name").textContent=name;
+  const br=document.getElementById("oem-badge-row");
+  const s=data.status;
+  let badges="";
+  if(s==="risk"||s==="both") badges+=`<span class="oem-status-badge badge-risk">\uD83D\uDD34 Has Risks</span>`;
+  if(s==="opportunity"||s==="both") badges+=`<span class="oem-status-badge badge-opp">\uD83D\uDFE2 Has Opportunities</span>`;
+  if(s==="neutral") badges=`<span class="oem-status-badge badge-neutral">\u26AA No Signals</span>`;
+  br.innerHTML=badges;
+  const sec=document.getElementById("oem-sections");sec.innerHTML="";
+  Object.entries(data.sections).forEach(([sName,bullets])=>{
+    const isSignals=sName==="Sales Signals";
+    const card=document.createElement("div");
+    card.className=`section-card${isSignals?" signals":""} open`;
+    const icon=SECTION_ICONS[sName]||"\uD83D\uDCCC";
+    card.innerHTML=`<div class="section-header" onclick="toggleSection(this)"><div class="section-title"><span class="section-icon">${icon}</span>${sName}</div><span class="section-chevron">\u25BE</span></div><div class="section-body">${bullets.map(buildBullet).join("")}</div>`;
+    sec.appendChild(card);
   });
-  document.getElementById('main').scrollTop=0;
-  if(window.innerWidth<768){
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('sidebar-overlay').classList.remove('open');
-  }
+  document.getElementById("main").scrollTop=0;
+  if(window.innerWidth<=768) document.getElementById("sidebar").classList.remove("open");
 }
-
+function toggleSection(h){h.parentElement.classList.toggle("open")}
 function showSnapshot(){
-  currentOEM = null;
-  snapshotView.style.display='block';
-  detailView.style.display='none';
-  document.querySelectorAll('.nav-item').forEach(el=>{
-    el.classList.remove('active');
-  });
-  document.querySelector('.nav-item.snapshot-nav').classList.add('active');
-  document.getElementById('main').scrollTop=0;
+  document.getElementById("snapshot-view").classList.add("visible");
+  document.getElementById("oem-detail").classList.remove("visible");
+  document.getElementById("snapshot-tab").classList.add("active");
+  document.querySelectorAll(".oem-nav-item").forEach(el=>el.classList.remove("active"));
+  document.getElementById("main").scrollTop=0;
+  if(window.innerWidth<=768) document.getElementById("sidebar").classList.remove("open");
 }
-
-function buildNav(filter=''){
-  navList.innerHTML='';
-  const snap = document.createElement('div');
-  snap.className='nav-item snapshot-nav'+(currentOEM===null?' active':'');
-  snap.textContent='📊 Weekly Snapshot';
-  snap.onclick=showSnapshot;
-  navList.appendChild(snap);
-  OEMS.filter(o=>o.name.toLowerCase().includes(filter.toLowerCase())).forEach(oem=>{
-    const el = document.createElement('div');
-    el.className='nav-item'+(currentOEM===oem.name?' active':'');
-    el.dataset.name=oem.name;
-    el.innerHTML=`<span>${escHtml(oem.name)}</span>${statusDot(oem.status)}`;
-    el.onclick=()=>showOEM(oem.name);
-    navList.appendChild(el);
-  });
+function filterOEMs(q){
+  const l=q.toLowerCase();
+  document.querySelectorAll(".oem-nav-item").forEach(el=>el.classList.toggle("oem-nav-hidden",!el.dataset.oem.toLowerCase().includes(l)));
 }
-
-function buildGrid(){
-  oemGrid.innerHTML='';
-  OEMS.forEach(oem=>{
-    const card = document.createElement('div');
-    card.className='oem-card';
-    card.innerHTML=`<span class="oem-card-name">${escHtml(oem.name)}</span><span class="oem-card-status">${statusEmoji(oem.status)}</span>`;
-    card.onclick=()=>showOEM(oem.name);
-    oemGrid.appendChild(card);
-  });
-}
-
-searchInput.addEventListener('input',()=>buildNav(searchInput.value));
-
-// Download
-document.getElementById('dl-btn').addEventListener('click',()=>{
-  const html = document.documentElement.outerHTML;
-  const blob = new Blob([html],{type:'text/html'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'OEM_Weekly_Intelligence_Brief_Apr23_2026.html';
-  a.click();
+function downloadDashboard(){
+  const html=document.documentElement.outerHTML;
+  const blob=new Blob([html],{type:"text/html"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download="OEM_Weekly_Intelligence_Brief_Apr27_2026.html";a.click();
   URL.revokeObjectURL(a.href);
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'),3500);
-});
+  const t=document.getElementById("toast");t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),3500);
+}
+function toggleSidebar(){document.getElementById("sidebar").classList.toggle("open")}
+buildSidebar();buildSnapshot();showSnapshot();
 
-// Hamburger
-document.getElementById('hamburger').addEventListener('click',()=>{
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sidebar-overlay').classList.toggle('open');
-});
-document.getElementById('sidebar-overlay').addEventListener('click',()=>{
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebar-overlay').classList.remove('open');
-});
-
-// Init
-buildNav();
-buildGrid();
-showSnapshot();
 </script>
 </body>
 </html>
